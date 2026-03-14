@@ -1,0 +1,25 @@
+{
+  "resellerclub": {
+    "resellerId": "YOUR_RESELLER_ID",
+    "apiKey": "YOUR_API_KEY",
+    "testMode": true,
+    "comment": "Get credentials from https://manage.resellerclub.com"
+  },
+  "crypto": {
+    "enabled": true,
+    "chains": ["ethereum", "solana"],
+    "rpcUrls": {
+      "ethereum": "https://eth.llamarpc.com",
+      "solana": "https://api.mainnet-beta.solana.com"
+    },
+    "comment": "Crypto payment verification on-chain"
+  },
+  "api": {
+    "port": 3000,
+    "apiKeys": [
+      "your-secret-api-key-here",
+      "another-key-for-different-agent"
+    ],
+    "comment": "Generate strong random API keys for your AI agents"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "ai-domain-platform-api",
+  "version": "1.0.0",
+  "description": "AI-friendly domain and hosting platform powered by ResellerClub",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "echo \"Tests coming soon\" && exit 0"
+  },
+  "keywords": [
+    "domain",
+    "hosting",
+    "ai",
+    "api",
+    "resellerclub",
+    "crypto"
+  ],
+  "author": "Joni AI",
+  "license": "MIT",
+  "dependencies": {
+    "@solana/web3.js": "^1.87.0",
+    "axios": "^1.13.6",
+    "bitcoinjs-lib": "^6.1.5",
+    "cors": "^2.8.6",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.9.0",
+    "express": "^4.22.1",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^7.2.0"
+  }
+}
