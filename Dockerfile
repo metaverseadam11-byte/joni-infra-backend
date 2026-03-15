@@ -4,5 +4,4 @@ COPY package*.json ./
 RUN npm ci --only=production
 COPY . .
 EXPOSE 3000
-# Use server.crypto.cjs for crypto payment functionality
-CMD ["node", "/app/server.crypto.cjs"]
+CMD ["node", "/app/server.porkbun.cjs"]
