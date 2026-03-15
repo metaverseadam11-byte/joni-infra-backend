@@ -1,91 +1,100 @@
 /**
- * AI Domain Platform API Server - Porkbun Edition
+ * AI Domain Platform - Crypto Payment Edition
  * 
- * Built for AI agents with Porkbun API + Crypto payments
+ * Automated domain registration with cryptocurrency payments
+ * Supports: ETH, USDC, SOL, BTC
  */
 
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
 
-const { router: domainsRouter, initPorkbun } = require('./routes/domains.porkbun.cjs');
+// Services
+const Database = require('./database/db.cjs');
+const PorkbunWrapper = require('./services/porkbun-wrapper.cjs');
+const CryptoPricingService = require('./services/crypto-pricing.cjs');
+const OrderManager = require('./services/order-manager.cjs');
+const BlockchainMonitor = require('./services/blockchain-monitor.cjs');
 
-// Load config from environment variables or config file
+// Load configuration
 let config;
+let walletAddresses;
 
 if (process.env.API_PORT || process.env.PORKBUN_API_KEY) {
-  // Load from environment variables (Railway/production)
   console.log('📦 Loading config from environment variables...');
   config = {
     api: {
       port: parseInt(process.env.API_PORT || process.env.PORT || '3000'),
       host: process.env.API_HOST || '0.0.0.0',
-      apiKey: process.env.API_KEY || 'default-key'
+      apiKey: process.env.API_KEY || 'joni-api-key-2026'
     },
     porkbun: {
       apiKey: process.env.PORKBUN_API_KEY,
       secretApiKey: process.env.PORKBUN_SECRET_KEY
     },
     crypto: {
-      enabled: process.env.CRYPTO_ENABLED === 'true',
-      chains: ['ethereum', 'solana', 'bitcoin'],
+      enabled: true,
       rpcUrls: {
         ethereum: process.env.ETH_RPC_URL || 'https://eth.llamarpc.com',
         solana: process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com',
         bitcoin: process.env.BITCOIN_RPC_URL || 'https://blockstream.info/api'
       }
-    },
-    server: {
-      cors: {
-        enabled: true,
-        origins: (process.env.CORS_ORIGINS || '*').split(',')
-      },
-      rateLimit: {
-        windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'),
-        max: parseInt(process.env.RATE_LIMIT_MAX || '100')
-      }
     }
   };
-} else {
-  // Load from config file (local development)
-  const configPath = path.join(__dirname, '../config/config.json');
+
+  // Load wallet addresses from file or environment
+  const walletPath = process.env.WALLET_PATH || path.join(__dirname, 'wallet-public.json');
   try {
-    config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-  } catch (error) {
-    console.error('❌ Failed to load config.json and no environment variables found');
-    console.error('Set environment variables or copy config/config.porkbun.example.json to config/config.json');
+    walletAddresses = JSON.parse(fs.readFileSync(walletPath, 'utf-8'));
+    console.log('✅ Wallet addresses loaded from:', walletPath);
+  } catch (err) {
+    console.error('❌ Failed to load wallet addresses:', err.message);
+    console.error('   Tried path:', walletPath);
     process.exit(1);
   }
+} else {
+  console.error('❌ Missing required environment variables');
+  process.exit(1);
 }
 
 // Validate required config
 if (!config.porkbun?.apiKey || !config.porkbun?.secretApiKey) {
   console.error('❌ Missing Porkbun API credentials');
-  console.error('Set PORKBUN_API_KEY and PORKBUN_SECRET_KEY environment variables');
   process.exit(1);
 }
 
-// Initialize Porkbun service
-initPorkbun(config.porkbun);
-
-// Initialize Express
+// Initialize services
 const app = express();
+const db = new Database(path.join(__dirname, 'database', 'orders.db'));
+const porkbun = new PorkbunWrapper(config.porkbun);
+const pricing = new CryptoPricingService();
+const orderManager = new OrderManager(db, porkbun, pricing, walletAddresses);
+const monitor = new BlockchainMonitor(config.crypto, db);
 
 // Security & middleware
-app.use(helmet());
-app.use(cors(config.server?.cors || {}));
+app.use(helmet({
+  contentSecurityPolicy: false // Allow inline scripts for frontend
+}));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: config.server?.rateLimit?.windowMs || 900000, // 15 minutes
-  max: config.server?.rateLimit?.max || 100
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100
 });
-app.use(limiter);
+app.use('/api/', limiter);
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ============================================================================
+// API ENDPOINTS
+// ============================================================================
 
 // Health check
 app.get('/health', (req, res) => {
@@ -93,55 +102,280 @@ app.get('/health', (req, res) => {
     status: 'ok',
     timestamp: new Date().toISOString(),
     provider: 'porkbun',
+    crypto: 'enabled',
     environment: process.env.RAILWAY_ENVIRONMENT || 'local'
   });
 });
 
 // Root endpoint
 app.get('/', (req, res) => {
-  res.json({
-    name: 'AI Domain Platform API',
-    version: '1.0.0',
-    provider: 'Porkbun',
-    status: 'running',
-    endpoints: {
-      health: '/health',
-      api: '/api/v1',
-      domains: '/api/v1/domains'
-    }
-  });
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // API Info
 app.get('/api/v1', (req, res) => {
   res.json({
-    name: 'AI Domain Platform API',
-    version: '1.0.0',
+    name: 'AI Domain Platform - Crypto Edition',
+    version: '2.0.0',
     provider: 'Porkbun',
+    crypto: ['ETH', 'USDC', 'SOL', 'BTC'],
     endpoints: {
-      domains: '/api/v1/domains',
-      health: '/health'
-    },
-    documentation: 'https://github.com/metaverseadam11-byte/joni-infra-backend'
+      orders: {
+        create: 'POST /api/v1/orders/create',
+        status: 'GET /api/v1/orders/:id/status',
+        details: 'GET /api/v1/orders/:id'
+      },
+      pricing: 'GET /api/v1/pricing',
+      domains: 'POST /api/v1/domains/check'
+    }
   });
 });
 
-// Mount routes
-app.use('/api/v1/domains', domainsRouter);
+// Authentication middleware
+const requireAuth = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({
+      success: false,
+      error: 'Missing or invalid authorization header'
+    });
+  }
+
+  const token = authHeader.substring(7);
+  
+  if (token !== config.api.apiKey) {
+    return res.status(401).json({
+      success: false,
+      error: 'Invalid API key'
+    });
+  }
+
+  next();
+};
+
+// ============================================================================
+// ORDERS API
+// ============================================================================
+
+/**
+ * POST /api/v1/orders/create
+ * Create a new order
+ */
+app.post('/api/v1/orders/create', async (req, res) => {
+  try {
+    const {
+      domain,
+      crypto_currency,
+      customer_email,
+      customer_name,
+      nameservers
+    } = req.body;
+
+    // Validate input
+    if (!domain) {
+      return res.status(400).json({
+        success: false,
+        error: 'Domain is required'
+      });
+    }
+
+    if (!crypto_currency) {
+      return res.status(400).json({
+        success: false,
+        error: 'Crypto currency is required (ETH, USDC, SOL, BTC)'
+      });
+    }
+
+    // Create order
+    const order = await orderManager.createOrder({
+      domain,
+      crypto_currency,
+      customer_email,
+      customer_name,
+      nameservers
+    });
+
+    res.json({
+      success: true,
+      order: order
+    });
+  } catch (err) {
+    console.error('Order creation error:', err);
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+/**
+ * GET /api/v1/orders/:id/status
+ * Get order status
+ */
+app.get('/api/v1/orders/:id/status', async (req, res) => {
+  try {
+    const orderUuid = req.params.id;
+    const order = await orderManager.getOrderStatus(orderUuid);
+
+    res.json({
+      success: true,
+      status: order.status,
+      order_id: order.order_id,
+      domain: order.domain,
+      tx_hash: order.tx_hash,
+      completed_at: order.completed_at
+    });
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+/**
+ * GET /api/v1/orders/:id
+ * Get full order details
+ */
+app.get('/api/v1/orders/:id', async (req, res) => {
+  try {
+    const orderUuid = req.params.id;
+    const order = await orderManager.getOrderStatus(orderUuid);
+
+    res.json({
+      success: true,
+      order: order
+    });
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+/**
+ * POST /api/v1/webhook/payment
+ * Webhook for payment notifications (future use)
+ */
+app.post('/api/v1/webhook/payment', requireAuth, async (req, res) => {
+  try {
+    // This can be used with services like BlockCypher or Alchemy webhooks
+    const { order_id, tx_hash, amount, currency } = req.body;
+
+    console.log('Webhook received:', { order_id, tx_hash, amount, currency });
+
+    res.json({
+      success: true,
+      message: 'Webhook received'
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+// ============================================================================
+// ADMIN API (Protected)
+// ============================================================================
+
+/**
+ * GET /api/v1/admin/orders
+ * List all orders (admin only)
+ */
+app.get('/api/v1/admin/orders', requireAuth, async (req, res) => {
+  try {
+    const { status, limit } = req.query;
+    
+    const filters = {};
+    if (status) filters.status = status;
+    if (limit) filters.limit = parseInt(limit);
+
+    const orders = await orderManager.getAllOrders(filters);
+
+    res.json({
+      success: true,
+      count: orders.length,
+      orders: orders
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+// ============================================================================
+// UTILITY API
+// ============================================================================
+
+/**
+ * GET /api/v1/pricing
+ * Get crypto prices
+ */
+app.get('/api/v1/pricing', async (req, res) => {
+  try {
+    const cryptos = ['ethereum', 'usdc', 'solana', 'bitcoin'];
+    const prices = await pricing.getPrices(cryptos);
+
+    res.json({
+      success: true,
+      prices: {
+        ETH: prices.ethereum,
+        USDC: prices.usdc,
+        SOL: prices.solana,
+        BTC: prices.bitcoin
+      },
+      timestamp: Date.now()
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+/**
+ * POST /api/v1/domains/check
+ * Check domain availability
+ */
+app.post('/api/v1/domains/check', async (req, res) => {
+  try {
+    const { domain } = req.body;
+
+    if (!domain) {
+      return res.status(400).json({
+        success: false,
+        error: 'Domain is required'
+      });
+    }
+
+    const result = await porkbun.checkDomain(domain);
+
+    res.json({
+      success: true,
+      domain: domain,
+      available: result.available,
+      price: result.price
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
 
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    error: 'Endpoint not found',
-    availableEndpoints: [
-      'GET /',
-      'GET /health',
-      'GET /api/v1',
-      'POST /api/v1/domains/search',
-      'POST /api/v1/domains/register',
-      'GET /api/v1/domains/list'
-    ]
+    error: 'Endpoint not found'
   });
 });
 
@@ -154,11 +388,82 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-const PORT = config.api?.port || process.env.PORT || 3000;
-const HOST = config.api?.host || '0.0.0.0';
+// ============================================================================
+// STARTUP
+// ============================================================================
 
-// Fast order creation endpoint (no external API calls)
+async function startServer() {
+  try {
+    // Initialize database
+    await db.init();
+
+    // Test Porkbun connection
+    console.log('🧪 Testing Porkbun API...');
+    await porkbun.testConnection();
+    console.log('✅ Porkbun API connected');
+
+    // Set up payment confirmation callback
+    monitor.setPaymentConfirmedCallback(async (order, txHash) => {
+      console.log(`💰 Payment confirmed callback: ${order.order_uuid}`);
+      await orderManager.processPayment(order, txHash);
+    });
+
+    // Start blockchain monitor
+    await monitor.start();
+
+    // Start Express server
+    const PORT = config.api.port;
+    const HOST = config.api.host;
+
+    app.listen(PORT, HOST, () => {
+      console.log('');
+      console.log('🚀 ════════════════════════════════════════════════════════');
+      console.log('   AI Domain Platform - Crypto Payment Edition');
+      console.log('════════════════════════════════════════════════════════════');
+      console.log(`📍 Server: http://${HOST}:${PORT}`);
+      console.log(`🐷 Provider: Porkbun`);
+      console.log(`💰 Crypto: ETH, USDC, SOL, BTC`);
+      console.log(`🌐 Environment: ${process.env.RAILWAY_ENVIRONMENT || 'local'}`);
+      console.log('════════════════════════════════════════════════════════════');
+      console.log('');
+      console.log('📬 Wallet Addresses:');
+      console.log(`   ETH/USDC: ${walletAddresses.evmWallet?.walletAddress}`);
+      console.log(`   SOL:      ${walletAddresses.solanaWallet?.walletAddress}`);
+      console.log(`   BTC:      ${walletAddresses.bitcoinWallet?.walletAddress}`);
+      console.log('');
+      console.log('✅ Ready to accept crypto payments!');
+      console.log('');
+    });
+  } catch (err) {
+    console.error('❌ Failed to start server:', err);
+    process.exit(1);
+  }
+}
+
+// Handle graceful shutdown
+process.on('SIGINT', () => {
+  console.log('\n🛑 Shutting down...');
+  monitor.stop();
+  db.close();
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  console.log('\n🛑 Shutting down...');
+  monitor.stop();
+  db.close();
+  process.exit(0);
+});
+
+// Start the server
+startServer();
+
+module.exports = app;
+
+/**
+ * POST /api/v1/orders/create-fast
+ * Fast order creation (no external API calls)
+ */
 app.post('/api/v1/orders/create-fast', async (req, res) => {
   try {
     const { domain, crypto_currency, customer_email } = req.body;
@@ -202,14 +507,3 @@ app.post('/api/v1/orders/create-fast', async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
-
-app.listen(PORT, HOST, () => {
-  console.log('\n🚀 AI Domain Platform API - Porkbun Edition');
-  console.log(`📍 Server: http://${HOST}:${PORT}`);
-  console.log(`🐷 Provider: Porkbun`);
-  console.log(`🌐 Environment: ${process.env.RAILWAY_ENVIRONMENT || 'local'}`);
-  console.log(`🔑 API Key: ${config.api.apiKey.substring(0, 8)}...`);
-  console.log('\n✅ Ready to serve AI agents!\n');
-});
-
-module.exports = app;
