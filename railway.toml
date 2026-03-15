@@ -1,8 +1,5 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "Dockerfile"
 
 [deploy]
 startCommand = "node server.porkbun.cjs"
-restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 10
