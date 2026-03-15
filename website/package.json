@@ -1,7 +1,7 @@
 {
-  "name": "joni-bz-website",
-  "version": "1.0.0",
-  "description": "Crypto domain sales platform - joni.bz",
+  "name": "agents-cloud-website",
+  "version": "2.0.0",
+  "description": "Crypto domain sales platform - Agents Cloud",
   "scripts": {
     "dev": "python3 -m http.server 8080",
     "deploy:vercel": "vercel --prod",
@@ -16,7 +16,7 @@
     "bitcoin",
     "solana"
   ],
-  "author": "joni.bz",
+  "author": "Agents Cloud",
   "license": "UNLICENSED",
   "private": true
 }
