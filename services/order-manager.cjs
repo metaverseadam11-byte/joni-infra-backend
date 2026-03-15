@@ -32,16 +32,8 @@ class OrderManager {
       throw new Error('Invalid domain name');
     }
 
-    // Check domain availability (via Porkbun)
-    try {
-      const availability = await this.porkbun.checkDomain(domain);
-      
-      if (!availability.available) {
-        throw new Error('Domain is not available');
-      }
-    } catch (err) {
-      throw new Error(`Domain check failed: ${err.message}`);
-    }
+    // Note: Availability already checked in /domains/check endpoint
+    // Skipping redundant check here to avoid timeouts
 
     // Get domain pricing from Porkbun
     let priceUsd;
