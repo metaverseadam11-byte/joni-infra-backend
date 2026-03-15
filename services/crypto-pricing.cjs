@@ -20,6 +20,14 @@ class CryptoPricingService {
       bitcoin: 'bitcoin',
       btc: 'bitcoin'
     };
+    
+    // Fallback prices (updated manually, used if API fails)
+    this.fallbackPrices = {
+      ethereum: 2800,
+      'usd-coin': 1.0,
+      solana: 140,
+      bitcoin: 65000
+    };
   }
 
   /**
@@ -44,7 +52,8 @@ class CryptoPricingService {
         params: {
           ids: coinId,
           vs_currencies: 'usd'
-        }
+        },
+        timeout: 5000 // 5 second timeout
       });
 
       const price = response.data[coinId]?.usd;
@@ -69,7 +78,14 @@ class CryptoPricingService {
         return cached.price;
       }
       
-      throw err;
+      // Use fallback price if available
+      const fallbackPrice = this.fallbackPrices[coinId];
+      if (fallbackPrice) {
+        console.log(`Using fallback price for ${crypto}: $${fallbackPrice}`);
+        return fallbackPrice;
+      }
+      
+      throw new Error(`Failed to get price for ${crypto} and no fallback available`);
     }
   }
 
