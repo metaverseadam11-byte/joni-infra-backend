@@ -1,12 +1,11 @@
 {
   "name": "ai-domain-platform-api",
   "version": "1.0.0",
-  "description": "AI-friendly domain and hosting platform powered by ResellerClub",
-  "main": "server.js",
-  "type": "module",
+  "description": "AI-friendly domain and hosting platform powered by Porkbun",
+  "main": "server.porkbun.cjs",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js",
+    "start": "node server.porkbun.cjs",
+    "dev": "node --watch server.porkbun.cjs",
     "test": "echo \"Tests coming soon\" && exit 0"
   },
   "keywords": [
