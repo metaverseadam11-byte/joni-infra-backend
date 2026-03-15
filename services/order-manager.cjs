@@ -57,8 +57,25 @@ class OrderManager {
     
     priceUsd = parseFloat(tldPricing.registration);
 
-    // Convert to crypto amount
-    const priceCrypto = await this.pricing.convertUsdToCrypto(priceUsd, crypto_currency);
+    // Convert to crypto amount (with fallback if API fails)
+    let priceCrypto;
+    try {
+      priceCrypto = await this.pricing.convertUsdToCrypto(priceUsd, crypto_currency);
+    } catch (err) {
+      console.error('Crypto pricing API failed, using fallback calculation:', err.message);
+      // Fallback: use hardcoded approximate prices
+      const fallbackRates = {
+        'ETH': 2800, 'ethereum': 2800,
+        'USDC': 1.0, 'usdc': 1.0,
+        'SOL': 140, 'solana': 140,
+        'BTC': 65000, 'bitcoin': 65000
+      };
+      const rate = fallbackRates[crypto_currency] || fallbackRates[crypto_currency.toUpperCase()];
+      if (!rate) {
+        throw new Error(`Unsupported cryptocurrency: ${crypto_currency}`);
+      }
+      priceCrypto = parseFloat((priceUsd / rate).toFixed(6));
+    }
 
     // Get wallet address for this order
     const walletAddress = this.getWalletAddress(crypto_currency);
