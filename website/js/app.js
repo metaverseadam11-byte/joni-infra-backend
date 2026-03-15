@@ -273,6 +273,9 @@ async function checkDomain() {
             throw new Error(orderData.error);
         }
 
+        // Debug: log order data
+        console.log('Order data received:', orderData.order);
+
         // Show payment screen
         showPaymentScreen(orderData.order);
 
