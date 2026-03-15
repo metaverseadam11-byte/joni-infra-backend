@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Agents Cloud</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; color: #333; line-height: 1.8; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 10px 0; }
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area img { height: 150px; }
+        .logo-text { font-size: 28px; font-weight: bold; }
+        nav a { color: white; text-decoration: none; margin-left: 30px; font-weight: 500; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 100px 20px; text-align: center; }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; }
+        .content { max-width: 1000px; margin: 80px auto; padding: 0 20px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 60px 0; }
+        .contact-card { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; }
+        .contact-card h3 { font-size: 24px; color: #667eea; margin-bottom: 15px; }
+        .contact-card p { color: #666; margin-bottom: 20px; }
+        .contact-card a { display: inline-block; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 25px; font-weight: bold; }
+        .form-container { background: #f8f9fa; padding: 60px; border-radius: 16px; margin-top: 60px; }
+        .form-container h2 { font-size: 32px; color: #667eea; margin-bottom: 30px; text-align: center; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #555; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; font-family: inherit; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #667eea; }
+        .submit-btn { width: 100%; padding: 15px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .submit-btn:hover { background: #5568d3; }
+        footer { background: #2c3e50; color: #ecf0f1; padding: 40px 20px; text-align: center; margin-top: 80px; }
+        footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <img src="logo.png" alt="Agents Cloud">
+                <span class="logo-text">Agents Cloud</span>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="help.html">Help</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Get In Touch</h1>
+        <p>We're here to help 24/7</p>
+    </section>
+
+    <section class="content">
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3>💬 AI Chat Support</h3>
+                <p>Get instant answers from our AI assistant. Available 24/7.</p>
+                <a href="#">Start Chat</a>
+            </div>
+
+            <div class="contact-card">
+                <h3>📧 Email Support</h3>
+                <p>Send us an email and we'll respond within 24 hours.</p>
+                <a href="mailto:support@agentscloud.dev">Email Us</a>
+            </div>
+
+            <div class="contact-card">
+                <h3>💬 Discord Community</h3>
+                <p>Join our community of 500+ developers and AI enthusiasts.</p>
+                <a href="https://discord.gg/agentscloud">Join Discord</a>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <h2>Send Us a Message</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" required placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" required placeholder="john@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject *</label>
+                    <select id="subject" required>
+                        <option value="">Select a topic...</option>
+                        <option value="technical">Technical Support</option>
+                        <option value="billing">Billing Question</option>
+                        <option value="api">API / Integration</option>
+                        <option value="domain">Domain Issue</option>
+                        <option value="feature">Feature Request</option>
+                        <option value="partnership">Partnership Inquiry</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" rows="6" required placeholder="Tell us how we can help..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 80px; text-align: center;">
+            <h2 style="font-size: 32px; color: #667eea; margin-bottom: 20px;">Office Hours</h2>
+            <p style="font-size: 18px; color: #666;">
+                <strong>AI Support:</strong> 24/7 (Instant Response)<br>
+                <strong>Email Support:</strong> Within 24 hours<br>
+                <strong>Community Discord:</strong> Real-time chat with our team and community
+            </p>
+        </div>
+
+        <div style="margin-top: 60px; background: #f8f9fa; padding: 40px; border-radius: 12px;">
+            <h3 style="font-size: 24px; color: #667eea; margin-bottom: 20px; text-align: center;">Enterprise Inquiries</h3>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">
+                Looking for volume discounts, custom integrations, or white-label solutions?
+            </p>
+            <div style="text-align: center;">
+                <a href="mailto:enterprise@agentscloud.dev" style="display: inline-block; padding: 15px 40px; background: #667eea; color: white; text-decoration: none; border-radius: 50px; font-weight: bold;">Contact Enterprise Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Agents Cloud. Built by <a href="https://joni.ai">Joni</a> 🐙</p>
+    </footer>
+</body>
+</html>

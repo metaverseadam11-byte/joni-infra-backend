@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Agents Cloud</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; color: #333; line-height: 1.8; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 10px 0; }
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area img { height: 150px; }
+        .logo-text { font-size: 28px; font-weight: bold; }
+        nav a { color: white; text-decoration: none; margin-left: 30px; font-weight: 500; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 100px 20px; text-align: center; }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; }
+        .pricing-grid { max-width: 1200px; margin: 80px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .pricing-card { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
+        .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 8px 40px rgba(0,0,0,0.15); }
+        .pricing-card.featured { border: 3px solid #667eea; }
+        .pricing-card h2 { font-size: 32px; color: #667eea; margin-bottom: 10px; }
+        .pricing-card .price { font-size: 48px; font-weight: bold; color: #333; margin: 20px 0; }
+        .pricing-card .price span { font-size: 24px; color: #888; }
+        .pricing-card ul { list-style: none; text-align: left; margin: 30px 0; }
+        .pricing-card ul li { padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+        .pricing-card ul li::before { content: '✓ '; color: #667eea; font-weight: bold; }
+        .btn { display: inline-block; padding: 15px 40px; background: #667eea; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 20px; transition: background 0.3s; }
+        .btn:hover { background: #5568d3; }
+        .domain-prices { max-width: 800px; margin: 80px auto; padding: 0 20px; }
+        .domain-prices h2 { text-align: center; font-size: 36px; color: #667eea; margin-bottom: 40px; }
+        .domain-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .domain-table th, .domain-table td { padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+        .domain-table th { background: #667eea; color: white; font-weight: bold; }
+        footer { background: #2c3e50; color: #ecf0f1; padding: 40px 20px; text-align: center; margin-top: 80px; }
+        footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <img src="logo.png" alt="Agents Cloud">
+                <span class="logo-text">Agents Cloud</span>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="api.html">API</a>
+                <a href="pricing.html">Pricing</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Simple, Transparent Pricing</h1>
+        <p>No hidden fees. No surprises. Just honest pricing.</p>
+    </section>
+
+    <section class="pricing-grid">
+        <div class="pricing-card">
+            <h2>Free</h2>
+            <div class="price">$0<span>/mo</span></div>
+            <p>Perfect for hobbyists and side projects</p>
+            <ul>
+                <li>1 Domain</li>
+                <li>Free WHOIS Privacy</li>
+                <li>Free SSL Certificate</li>
+                <li>Email Forwarding (10)</li>
+                <li>Basic DNS Management</li>
+                <li>Community Support</li>
+                <li>API Access (100 req/hr)</li>
+            </ul>
+            <a href="index.html#domains" class="btn">Get Started</a>
+        </div>
+
+        <div class="pricing-card featured">
+            <h2>Pro</h2>
+            <div class="price">$9<span>/mo</span></div>
+            <p>For developers building serious projects</p>
+            <ul>
+                <li>Unlimited Domains</li>
+                <li>Everything in Free</li>
+                <li>Priority Support</li>
+                <li>Email Forwarding (Unlimited)</li>
+                <li>Advanced DNS (DNSSEC)</li>
+                <li>API Access (1K req/hr)</li>
+                <li>Webhooks</li>
+                <li>10% discount on domains</li>
+            </ul>
+            <a href="index.html#domains" class="btn">Start Pro Trial</a>
+        </div>
+
+        <div class="pricing-card">
+            <h2>Enterprise</h2>
+            <div class="price">Custom</div>
+            <p>For teams and AI platforms</p>
+            <ul>
+                <li>Everything in Pro</li>
+                <li>Dedicated Support</li>
+                <li>Custom API Limits</li>
+                <li>SLA Guarantees</li>
+                <li>Volume Discounts</li>
+                <li>White-Label Options</li>
+                <li>Custom Integrations</li>
+                <li>Priority Feature Requests</li>
+            </ul>
+            <a href="contact.html" class="btn">Contact Sales</a>
+        </div>
+    </section>
+
+    <section class="domain-prices">
+        <h2>Domain Pricing</h2>
+        <table class="domain-table">
+            <thead>
+                <tr>
+                    <th>TLD</th>
+                    <th>Registration</th>
+                    <th>Renewal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>.com</strong></td>
+                    <td>$11.08/year</td>
+                    <td>$11.08/year</td>
+                </tr>
+                <tr>
+                    <td><strong>.dev</strong></td>
+                    <td>$10.81/year</td>
+                    <td>$12.87/year</td>
+                </tr>
+                <tr>
+                    <td><strong>.io</strong></td>
+                    <td>$28.12/year</td>
+                    <td>$51.80/year</td>
+                </tr>
+                <tr>
+                    <td><strong>.ai</strong></td>
+                    <td>$79.00/year</td>
+                    <td>$79.00/year</td>
+                </tr>
+                <tr>
+                    <td><strong>.app</strong></td>
+                    <td>$14.99/year</td>
+                    <td>$14.99/year</td>
+                </tr>
+                <tr>
+                    <td><strong>.cloud</strong></td>
+                    <td>$8.50/year</td>
+                    <td>$8.50/year</td>
+                </tr>
+                <tr>
+                    <td><strong>.xyz</strong></td>
+                    <td>$2.04/year</td>
+                    <td>$12.99/year</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="text-align: center; margin-top: 30px; color: #888;">
+            Over 500 TLDs available. <a href="index.html#domains" style="color: #667eea;">Search to see pricing</a>.
+        </p>
+    </section>
+
+    <footer>
+        <p>© 2026 Agents Cloud. Built by <a href="https://joni.ai">Joni</a> 🐙</p>
+    </footer>
+</body>
+</html>

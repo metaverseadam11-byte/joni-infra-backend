@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center | Agents Cloud</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; color: #333; line-height: 1.8; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 10px 0; }
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area img { height: 150px; }
+        .logo-text { font-size: 28px; font-weight: bold; }
+        nav a { color: white; text-decoration: none; margin-left: 30px; font-weight: 500; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 100px 20px; text-align: center; }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; }
+        .search-bar { max-width: 600px; margin: 30px auto; }
+        .search-bar input { width: 100%; padding: 15px 25px; font-size: 18px; border: none; border-radius: 50px; }
+        .content { max-width: 1000px; margin: 80px auto; padding: 0 20px; }
+        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 40px 0; }
+        .faq-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .faq-card h3 { font-size: 22px; color: #667eea; margin-bottom: 15px; }
+        .faq-card p { color: #555; line-height: 1.8; }
+        .category { margin: 60px 0; }
+        .category h2 { font-size: 32px; color: #667eea; margin-bottom: 30px; }
+        .category-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .category-item { background: #f8f9fa; padding: 20px; border-radius: 8px; transition: background 0.3s; }
+        .category-item:hover { background: #e7f3ff; }
+        .category-item h4 { color: #333; margin-bottom: 10px; }
+        footer { background: #2c3e50; color: #ecf0f1; padding: 40px 20px; text-align: center; margin-top: 80px; }
+        footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <img src="logo.png" alt="Agents Cloud">
+                <span class="logo-text">Agents Cloud</span>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="api.html">API</a>
+                <a href="help.html">Help</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>How Can We Help?</h1>
+        <p>Search our knowledge base or browse categories</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for help articles...">
+        </div>
+    </section>
+
+    <section class="content">
+        <h2 style="text-align: center; font-size: 36px; color: #667eea; margin-bottom: 40px;">Popular Questions</h2>
+        
+        <div class="faq-grid">
+            <div class="faq-card">
+                <h3>How do I register a domain?</h3>
+                <p>Enter your desired domain in the search box on our homepage, select your payment method (crypto or card), and complete the checkout. Your domain will be active within minutes!</p>
+            </div>
+
+            <div class="faq-card">
+                <h3>What crypto currencies do you accept?</h3>
+                <p>We accept Bitcoin (BTC), Ethereum (ETH), Solana (SOL), and USD Coin (USDC). Payment confirmation is instant, and domains are registered automatically.</p>
+            </div>
+
+            <div class="faq-card">
+                <h3>How do I update DNS records?</h3>
+                <p>Log into your dashboard, select your domain, and navigate to DNS Management. You can add A, AAAA, CNAME, MX, TXT records and more. Changes propagate within minutes.</p>
+            </div>
+
+            <div class="faq-card">
+                <h3>Is WHOIS privacy included?</h3>
+                <p>Yes! WHOIS privacy protection is included free with every domain. Your personal information will be hidden from public WHOIS lookups.</p>
+            </div>
+
+            <div class="faq-card">
+                <h3>Can I transfer my domain here?</h3>
+                <p>Absolutely! Transfers are free and keep your existing renewal date. Simply unlock your domain at your current registrar, get the auth code, and initiate the transfer on our site.</p>
+            </div>
+
+            <div class="faq-card">
+                <h3>How does auto-renewal work?</h3>
+                <p>Domains auto-renew by default to prevent accidental expiration. You can disable this in your domain settings. We'll send reminder emails before charging your payment method.</p>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>Browse by Category</h2>
+            <div class="category-list">
+                <div class="category-item">
+                    <h4>🌐 Domain Management</h4>
+                    <p>Registration, transfers, renewals, and settings</p>
+                </div>
+                <div class="category-item">
+                    <h4>🔧 DNS Configuration</h4>
+                    <p>A records, CNAME, MX, DNSSEC, and troubleshooting</p>
+                </div>
+                <div class="category-item">
+                    <h4>💳 Billing & Payments</h4>
+                    <p>Crypto payments, invoices, refunds, and pricing</p>
+                </div>
+                <div class="category-item">
+                    <h4>🤖 API & Automation</h4>
+                    <p>API keys, webhooks, rate limits, and SDKs</p>
+                </div>
+                <div class="category-item">
+                    <h4>📧 Email Hosting</h4>
+                    <p>Setup, forwarding, spam filters, and aliases</p>
+                </div>
+                <div class="category-item">
+                    <h4>☁️ Hosting & SSL</h4>
+                    <p>Static hosting, SSL certificates, and CDN</p>
+                </div>
+                <div class="category-item">
+                    <h4>🔒 Security</h4>
+                    <p>2FA, WHOIS privacy, domain locks, and backups</p>
+                </div>
+                <div class="category-item">
+                    <h4>❓ General Questions</h4>
+                    <p>Account settings, contact info, and policies</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 60px 20px; border-radius: 16px; text-align: center; margin-top: 80px;">
+            <h2 style="font-size: 36px; color: #667eea; margin-bottom: 20px;">Still Need Help?</h2>
+            <p style="font-size: 18px; color: #666; margin-bottom: 30px;">
+                Our AI support is available 24/7. We typically respond within minutes.
+            </p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="contact.html" style="display: inline-block; padding: 15px 40px; background: #667eea; color: white; text-decoration: none; border-radius: 50px; font-weight: bold;">Contact Support</a>
+                <a href="https://discord.gg/agentscloud" style="display: inline-block; padding: 15px 40px; background: #5865F2; color: white; text-decoration: none; border-radius: 50px; font-weight: bold;">Join Discord</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Agents Cloud. Built by <a href="https://joni.ai">Joni</a> 🐙</p>
+    </footer>
+</body>
+</html>

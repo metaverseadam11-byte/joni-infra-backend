@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation | Agents Cloud</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; color: #333; line-height: 1.8; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 10px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area img { height: 150px; }
+        .logo-text { font-size: 28px; font-weight: bold; }
+        nav a { color: white; text-decoration: none; margin-left: 30px; font-weight: 500; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 100px 20px; text-align: center; }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; }
+        .hero p { font-size: 22px; opacity: 0.9; }
+        .content { max-width: 900px; margin: 80px auto; padding: 0 20px; }
+        .content h2 { font-size: 36px; color: #667eea; margin: 50px 0 25px 0; }
+        .content h3 { font-size: 24px; color: #555; margin: 30px 0 15px 0; }
+        .content p { font-size: 18px; margin-bottom: 20px; color: #555; }
+        .code-block { background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0; font-family: 'Courier New', monospace; overflow-x: auto; }
+        .endpoint { background: #e7f3ff; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .endpoint strong { color: #667eea; }
+        footer { background: #2c3e50; color: #ecf0f1; padding: 40px 20px; text-align: center; margin-top: 80px; }
+        footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <img src="logo.png" alt="Agents Cloud">
+                <span class="logo-text">Agents Cloud</span>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="api.html">API</a>
+                <a href="pricing.html">Pricing</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>API Documentation</h1>
+        <p>Build powerful automations with our RESTful API</p>
+    </section>
+
+    <section class="content">
+        <h2>Getting Started</h2>
+        <p>
+            The Agents Cloud API is designed for developers and AI agents who want to automate domain registration, DNS management, and hosting deployment. All endpoints return JSON and support both authentication via API keys and crypto payments.
+        </p>
+
+        <h3>Base URL</h3>
+        <div class="code-block">
+            https://api.agentscloud.dev/v1
+        </div>
+
+        <h3>Authentication</h3>
+        <p>Include your API key in the <code>Authorization</code> header:</p>
+        <div class="code-block">
+            Authorization: Bearer YOUR_API_KEY
+        </div>
+
+        <h2>Core Endpoints</h2>
+
+        <h3>Check Domain Availability</h3>
+        <div class="endpoint">
+            <strong>POST</strong> /domains/check
+        </div>
+        <div class="code-block">
+{
+  "domain": "example.com"
+}
+
+// Response
+{
+  "success": true,
+  "available": true,
+  "price_usd": 10.81,
+  "tld": "com"
+}
+        </div>
+
+        <h3>Create Domain Order</h3>
+        <div class="endpoint">
+            <strong>POST</strong> /orders/create-fast
+        </div>
+        <div class="code-block">
+{
+  "domain": "example.com",
+  "crypto_currency": "usdc",
+  "customer_email": "user@example.com"
+}
+
+// Response
+{
+  "success": true,
+  "order": {
+    "order_id": "ord_123abc",
+    "domain": "example.com",
+    "price_usd": 10.81,
+    "price_crypto": 10.85,
+    "crypto_currency": "usdc",
+    "wallet_address": "0x...",
+    "expires_at": 1710547200
+  }
+}
+        </div>
+
+        <h3>Check Order Status</h3>
+        <div class="endpoint">
+            <strong>GET</strong> /orders/:id/status
+        </div>
+        <div class="code-block">
+// Response
+{
+  "success": true,
+  "status": "completed",
+  "domain": "example.com",
+  "tx_hash": "0x..."
+}
+        </div>
+
+        <h3>List Your Domains</h3>
+        <div class="endpoint">
+            <strong>GET</strong> /domains/list
+        </div>
+        <div class="code-block">
+// Response
+{
+  "success": true,
+  "domains": [
+    {
+      "domain": "example.com",
+      "status": "active",
+      "expires_at": "2027-03-15",
+      "auto_renew": true
+    }
+  ]
+}
+        </div>
+
+        <h3>Update DNS Records</h3>
+        <div class="endpoint">
+            <strong>POST</strong> /dns/create
+        </div>
+        <div class="code-block">
+{
+  "domain": "example.com",
+  "type": "A",
+  "name": "www",
+  "content": "1.2.3.4",
+  "ttl": 3600
+}
+        </div>
+
+        <h2>Rate Limits</h2>
+        <p>
+            <strong>Free Tier:</strong> 100 requests/hour<br>
+            <strong>Pro Tier:</strong> 1,000 requests/hour<br>
+            <strong>Enterprise:</strong> Unlimited
+        </p>
+
+        <h2>SDKs & Libraries</h2>
+        <p>We provide official SDKs for popular languages:</p>
+        <ul style="list-style-position: inside; margin: 20px 0;">
+            <li><strong>Node.js:</strong> <code>npm install @agentscloud/sdk</code></li>
+            <li><strong>Python:</strong> <code>pip install agentscloud</code></li>
+            <li><strong>Go:</strong> <code>go get github.com/agentscloud/go-sdk</code></li>
+            <li><strong>Rust:</strong> <code>cargo add agentscloud</code></li>
+        </ul>
+
+        <h2>Webhooks</h2>
+        <p>
+            Subscribe to real-time events like domain registration, payment confirmation, and DNS updates. Configure webhooks in your dashboard.
+        </p>
+
+        <h2>Support</h2>
+        <p>
+            Need help? Join our <a href="https://discord.gg/agentscloud">Discord</a>, check the <a href="kb.html">Knowledge Base</a>, or email <a href="mailto:api@agentscloud.dev">api@agentscloud.dev</a>.
+        </p>
+    </section>
+
+    <footer>
+        <p>© 2026 Agents Cloud. Built by <a href="https://joni.ai">Joni</a> 🐙</p>
+    </footer>
+</body>
+</html>
