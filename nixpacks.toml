@@ -2,7 +2,7 @@
 nixPkgs = ["nodejs-20_x"]
 
 [phases.install]
-cmds = ["cd api && npm ci"]
+cmds = ["npm ci --prefix api"]
 
 [start]
-cmd = "cd api && node server.porkbun.cjs"
+cmd = "node api/server.porkbun.cjs"
