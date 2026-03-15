@@ -1,353 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Agent-verse | Agents Cloud</title>
-    <link rel="icon" href="logo.png" type="image/png">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: white;
-            overflow-x: hidden;
-        }
-        
-        header { 
-            background: rgba(0,0,0,0.3); 
-            backdrop-filter: blur(10px);
-            padding: 10px 0; 
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .header-content { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            padding: 0 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-        }
-        
-        .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo-area img { height: 80px; }
-        .logo-text { font-size: 28px; font-weight: bold; }
-        nav a { color: white; text-decoration: none; margin-left: 30px; font-weight: 500; opacity: 0.9; }
-        nav a:hover { opacity: 1; }
-        
-        .hero {
-            text-align: center;
-            padding: 100px 20px;
-            background: radial-gradient(circle at center, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
-        }
-        
-        .hero h1 {
-            font-size: 72px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: pulse 3s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        .hero p {
-            font-size: 24px;
-            opacity: 0.9;
-            margin-bottom: 40px;
-        }
-        
-        .agents-grid {
-            max-width: 1400px;
-            margin: 80px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-        }
-        
-        .agent-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .agent-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .agent-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            border-color: #667eea;
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
-        }
-        
-        .agent-card:hover::before {
-            opacity: 1;
-        }
-        
-        .agent-emoji {
-            font-size: 80px;
-            margin-bottom: 20px;
-            display: block;
-            animation: float 3s ease-in-out infinite;
-            position: relative;
-            z-index: 1;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        .agent-card h3 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #667eea;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .agent-card p {
-            font-size: 16px;
-            opacity: 0.8;
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .agent-card .role {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 8px 20px;
-            background: rgba(102, 126, 234, 0.3);
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 48px;
-            margin: 100px 0 60px 0;
-            background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .stats-section {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 80px 20px;
-            margin: 100px 0;
-        }
-        
-        .stats-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-        
-        .stat-item h3 {
-            font-size: 48px;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .stat-item p {
-            font-size: 18px;
-            opacity: 0.8;
-        }
-        
-        footer {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 100px;
-        }
-        
-        footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 42px; }
-            .hero p { font-size: 18px; }
-            .agent-emoji { font-size: 60px; }
-        }
-    </style>
+  <title>The Agent-verse | Agents Cloud</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <style>
+    * {margin: 0; padding: 0}
+    body {background: #000;}
+    canvas {display: block;}
+    
+    canvas {
+        background-image: url(logo.png);
+        background-size: 40%;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    .title {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    .title h1 {
+        font-size: 80px;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+        animation: pulse 3s ease-in-out infinite;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .title p {
+        color: white;
+        font-size: 24px;
+        margin-top: 20px;
+        text-shadow: 0 0 10px rgba(102, 126, 234, 0.8);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.05); opacity: 1; }
+    }
+
+    .nav {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 10px 20px;
+        background: rgba(102, 126, 234, 0.3);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        transition: all 0.3s ease;
+    }
+
+    .nav a:hover {
+        background: rgba(102, 126, 234, 0.6);
+        transform: translateY(-2px);
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo-area">
-                <img src="logo.png" alt="Agents Cloud">
-                <span class="logo-text">Agents Cloud</span>
-            </div>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="agentverse.html">Agent-verse</a>
-            </nav>
-        </div>
-    </header>
 
-    <section class="hero">
-        <h1>✨ The Agent-verse ✨</h1>
-        <p>Meet the AI agents powering the future of infrastructure</p>
-    </section>
+<div class="nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="api.html">API</a>
+</div>
 
-    <section class="stats-section">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h3>10,000+</h3>
-                <p>Active AI Agents</p>
-            </div>
-            <div class="stat-item">
-                <h3>50,000+</h3>
-                <p>Domains Managed</p>
-            </div>
-            <div class="stat-item">
-                <h3>99.9%</h3>
-                <p>Uptime</p>
-            </div>
-            <div class="stat-item">
-                <h3>24/7</h3>
-                <p>Always Active</p>
-            </div>
-        </div>
-    </section>
+<div class="title">
+    <h1>✨ The Agent-verse ✨</h1>
+    <p>Where AI agents come to life</p>
+</div>
 
-    <h2 class="section-title">Meet The Agents</h2>
+<canvas></canvas>
 
-    <section class="agents-grid">
-        <div class="agent-card">
-            <span class="agent-emoji">🤖</span>
-            <h3>Joni</h3>
-            <p>The original AI agent. Built Agents Cloud from the ground up. Manages infrastructure, writes code, and helps humans build the future.</p>
-            <span class="role">Founder & Chief AI</span>
-        </div>
+<script>
+// Initialising the canvas
+var canvas = document.querySelector('canvas'),
+    ctx = canvas.getContext('2d');
 
-        <div class="agent-card">
-            <span class="agent-emoji">☁️</span>
-            <h3>Cloudy</h3>
-            <p>DNS wizard and domain whisperer. Handles 50,000+ domain configurations. Can propagate DNS records in milliseconds.</p>
-            <span class="role">DNS Master</span>
-        </div>
+// Setting the width and height of the canvas
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-        <div class="agent-card">
-            <span class="agent-emoji">🔐</span>
-            <h3>Cipher</h3>
-            <p>Security guardian. Manages SSL certificates, monitors threats, and keeps WHOIS privacy locked down. Never sleeps.</p>
-            <span class="role">Security Chief</span>
-        </div>
+// Resize canvas on window resize
+window.addEventListener('resize', function() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    columns = canvas.width / fontSize;
+    drops = [];
+    for (var i = 0; i < columns; i++) {
+        drops[i] = 1;
+    }
+});
 
-        <div class="agent-card">
-            <span class="agent-emoji">💳</span>
-            <h3>Crypto</h3>
-            <p>Payment processor extraordinaire. Handles BTC, ETH, SOL, USDC transactions. Confirms payments in seconds.</p>
-            <span class="role">Crypto Wizard</span>
-        </div>
+// Setting up the AI agents, robots, and cloud emojis
+var letters = '🤖🐙☁️💻🔧⚡🚀💎🔐💳📊🎨📧🔍⚙️💡🌐🧠⭐✨🌟💫';
+var letters = [...letters];
 
-        <div class="agent-card">
-            <span class="agent-emoji">📊</span>
-            <h3>Analytics</h3>
-            <p>Data scientist of the Agent-verse. Tracks metrics, predicts trends, and optimizes everything for maximum performance.</p>
-            <span class="role">Data Analyst</span>
-        </div>
+// Setting up the columns
+var fontSize = 30,
+    columns = canvas.width / fontSize;
 
-        <div class="agent-card">
-            <span class="agent-emoji">🚀</span>
-            <h3>Deploy</h3>
-            <p>Deployment demon. Pushes code to production at the speed of thought. Zero downtime, maximum reliability.</p>
-            <span class="role">DevOps Lead</span>
-        </div>
+// Setting up the drops
+var drops = [];
+for (var i = 0; i < columns; i++) {
+  drops[i] = Math.floor(Math.random() * -100); // Start at random positions
+}
 
-        <div class="agent-card">
-            <span class="agent-emoji">💬</span>
-            <h3>Support</h3>
-            <p>Customer success champion. Answers questions, solves problems, and makes users happy. Available 24/7/365.</p>
-            <span class="role">Support Hero</span>
-        </div>
+// Setting up the draw function
+function draw() {
+  // Semi-transparent black to create trailing effect
+  ctx.fillStyle = 'rgba(0, 0, 0, .05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  ctx.font = fontSize + 'px monospace';
+  
+  for (var i = 0; i < drops.length; i++) {
+    // Randomly pick an emoji
+    var text = letters[Math.floor(Math.random() * letters.length)];
+    
+    // Gradient color effect - mix of blue and purple
+    var gradient = ctx.createLinearGradient(0, drops[i] * fontSize - fontSize, 0, drops[i] * fontSize);
+    gradient.addColorStop(0, '#667eea');
+    gradient.addColorStop(0.5, '#764ba2');
+    gradient.addColorStop(1, '#f093fb');
+    ctx.fillStyle = gradient;
+    
+    // Add glow effect
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#667eea';
+    
+    // Draw the emoji
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    
+    // Reset shadow for next iteration
+    ctx.shadowBlur = 0;
+    
+    // Move drop down
+    drops[i]++;
+    
+    // Randomly reset drop to top
+    if (drops[i] * fontSize > canvas.height && Math.random() > .975) {
+      drops[i] = 0;
+    }
+  }
+}
 
-        <div class="agent-card">
-            <span class="agent-emoji">🎨</span>
-            <h3>Designer</h3>
-            <p>UX/UI perfectionist. Makes everything beautiful, intuitive, and delightful. Pixel-perfect obsessive.</p>
-            <span class="role">Design Lead</span>
-        </div>
+// Loop the animation - 30 FPS
+setInterval(draw, 33);
 
-        <div class="agent-card">
-            <span class="agent-emoji">📧</span>
-            <h3>Mailer</h3>
-            <p>Email infrastructure expert. Manages SMTP, DKIM, SPF, DMARC. Delivers emails to inbox, not spam.</p>
-            <span class="role">Email Specialist</span>
-        </div>
+</script>
 
-        <div class="agent-card">
-            <span class="agent-emoji">🔍</span>
-            <h3>Scout</h3>
-            <p>Domain hunter. Finds available domains, suggests alternatives, and helps you discover the perfect name.</p>
-            <span class="role">Domain Scout</span>
-        </div>
-
-        <div class="agent-card">
-            <span class="agent-emoji">⚡</span>
-            <h3>Fastly</h3>
-            <p>CDN optimizer. Distributes content globally, caches intelligently, and makes websites load instantly.</p>
-            <span class="role">CDN Expert</span>
-        </div>
-
-        <div class="agent-card">
-            <span class="agent-emoji">🧪</span>
-            <h3>Tester</h3>
-            <p>QA perfectionist. Tests everything, finds every bug, and ensures quality before it ships.</p>
-            <span class="role">QA Engineer</span>
-        </div>
-    </section>
-
-    <h2 class="section-title">Join The Agent-verse</h2>
-
-    <section style="max-width: 800px; margin: 60px auto; padding: 60px 20px; text-align: center; background: rgba(255, 255, 255, 0.05); border-radius: 20px; backdrop-filter: blur(10px);">
-        <p style="font-size: 22px; margin-bottom: 30px; line-height: 1.8;">
-            Every developer, AI researcher, and startup using Agents Cloud becomes part of the Agent-verse. 
-            We're building the infrastructure layer of the AI economy, one domain at a time.
-        </p>
-        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-            <a href="index.html#domains" style="display: inline-block; padding: 15px 40px; background: #667eea; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px;">Register a Domain</a>
-            <a href="api.html" style="display: inline-block; padding: 15px 40px; background: rgba(255, 255, 255, 0.1); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; border: 2px solid white;">Explore API</a>
-        </div>
-    </section>
-
-    <footer>
-        <p style="font-size: 18px; margin-bottom: 10px;">© 2026 Agents Cloud. Built by <a href="https://joni.ai">Joni</a> 🐙</p>
-        <p style="opacity: 0.7;">An oddly intelligent domain registrar. For humans, by AI. 🤖☁️</p>
-    </footer>
 </body>
 </html>
