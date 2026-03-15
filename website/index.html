@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agents Cloud - Domain Infrastructure for AI Agents</title>
-    <meta name="description" content="Infrastructure as Code. Deploy domains, hosting, and DNS programmatically.">
+    <title>Agents Cloud | An oddly intelligent experience.</title>
+    <meta name="description" content="AI-powered domain infrastructure. Deploy domains, hosting, and DNS programmatically with crypto payments.">
     <link rel="icon" href="logo.png" type="image/png">
     <style>
         * {
@@ -14,544 +14,522 @@
         }
 
         body {
-            font-family: 'Courier New', 'Consolas', monospace;
-            background: #0a0a0a;
-            color: #00ff00;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: #333;
             line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
         }
 
-        .terminal {
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            background: #000;
-            border: 2px solid #333;
-            border-radius: 8px;
-            box-shadow: 0 0 40px rgba(0, 255, 0, 0.1);
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .terminal-header {
-            background: #1a1a1a;
-            padding: 12px 20px;
-            border-bottom: 1px solid #333;
+        .logo-area {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
 
-        .terminal-buttons {
-            display: flex;
-            gap: 8px;
+        .logo-area img {
+            height: 50px;
+            width: auto;
         }
 
-        .terminal-button {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .btn-red { background: #ff5f56; }
-        .btn-yellow { background: #ffbd2e; }
-        .btn-green { background: #27c93f; }
-
-        .terminal-title {
-            color: #888;
-            font-size: 13px;
-        }
-
-        .terminal-body {
-            padding: 30px;
-            min-height: 500px;
-        }
-
-        .comment {
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .project-title {
-            color: #00ff00;
-            font-size: 24px;
+        .logo-text {
+            font-size: 28px;
             font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-            text-align: center;
-        }
-        
-        .logo-container {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-        }
-        
-        .logo-container img {
-            max-width: 250px;
-            height: auto;
-            filter: drop-shadow(0 0 20px rgba(0, 204, 255, 0.3));
-            transition: transform 0.3s ease;
-        }
-        
-        .logo-container img:hover {
-            transform: scale(1.05);
         }
 
-        .section-title {
-            color: #00ccff;
-            font-size: 18px;
-            margin: 30px 0 15px 0;
-        }
-
-        .description {
-            color: #888;
-            margin-bottom: 20px;
-        }
-
-        .prompt {
-            color: #00ff00;
-            margin-top: 20px;
-        }
-
-        .prompt::before {
-            content: 'user@joni:~$ ';
-            color: #00ccff;
-        }
-
-        .command {
-            color: #fff;
-        }
-
-        .output {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        .feature {
-            margin: 8px 0;
-            padding-left: 20px;
-        }
-
-        .feature::before {
-            content: '✓ ';
-            color: #00ff00;
-        }
-
-        .key-value {
+        nav {
             display: flex;
-            gap: 10px;
-            margin: 5px 0;
+            gap: 30px;
         }
 
-        .key {
-            color: #ff00ff;
-            min-width: 150px;
-        }
-
-        .value {
-            color: #fff;
-        }
-
-        .link {
-            color: #00ccff;
+        nav a {
+            color: white;
             text-decoration: none;
-            cursor: pointer;
+            font-weight: 500;
+            transition: opacity 0.3s;
         }
 
-        .link:hover {
-            text-decoration: underline;
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 40px;
         }
 
         .search-box {
-            margin: 20px 0;
+            max-width: 700px;
+            margin: 0 auto;
             display: flex;
             gap: 10px;
-            align-items: center;
         }
 
-        .search-input {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #00ff00;
-            padding: 10px 15px;
-            font-family: inherit;
-            font-size: 14px;
+        .search-box input {
             flex: 1;
-            border-radius: 4px;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #00ff00;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
-        }
-
-        .search-button {
-            background: #00ff00;
-            color: #000;
+            padding: 18px 25px;
+            font-size: 18px;
             border: none;
-            padding: 10px 20px;
-            font-family: inherit;
+            border-radius: 50px;
+            outline: none;
+        }
+
+        .search-box button {
+            padding: 18px 40px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s;
+            transition: transform 0.3s;
         }
 
-        .search-button:hover {
-            background: #00ccff;
+        .search-box button:hover {
             transform: scale(1.05);
         }
 
-        .result-box {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 4px;
-            display: none;
+        /* Stats */
+        .stats {
+            background: #f8f9fa;
+            padding: 60px 20px;
+            text-align: center;
         }
 
-        .result-box.show {
-            display: block;
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
         }
 
-        .status-available {
-            color: #00ff00;
+        .stat-item h3 {
+            font-size: 36px;
+            color: #667eea;
+            margin-bottom: 10px;
         }
 
-        .status-unavailable {
-            color: #ff5555;
+        /* Features */
+        .features {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
         }
 
-        .crypto-options {
-            margin: 20px 0;
+        .features h2 {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 60px;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 30px rgba(0,0,0,0.12);
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .feature-card .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s;
+        }
+
+        .feature-card .btn:hover {
+            background: #5568d3;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 60px 20px 20px 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 30px;
+            text-align: center;
+            color: #95a5a6;
+        }
+
+        .payment-methods {
             display: flex;
-            gap: 10px;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
 
-        .crypto-btn {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #00ff00;
+        .payment-methods span {
+            background: #34495e;
             padding: 8px 16px;
-            font-family: inherit;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .crypto-btn:hover,
-        .crypto-btn.selected {
-            border-color: #00ff00;
-            background: rgba(0, 255, 0, 0.1);
-        }
-
-        .blink {
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
+            border-radius: 6px;
+            font-size: 14px;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
+            .hero h1 {
+                font-size: 32px;
             }
-            
-            .terminal-body {
-                padding: 15px;
+
+            .search-box {
+                flex-direction: column;
             }
-            
-            .project-title {
-                font-size: 18px;
+
+            nav {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <div class="terminal">
-        <div class="terminal-header">
-            <div class="terminal-buttons">
-                <div class="terminal-button btn-red"></div>
-                <div class="terminal-button btn-yellow"></div>
-                <div class="terminal-button btn-green"></div>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <img src="logo.png" alt="Agents Cloud">
+                <span class="logo-text">Agents Cloud</span>
             </div>
-            <div class="terminal-title">agents.cloud — terminal</div>
+            <nav>
+                <a href="#domains">Domains</a>
+                <a href="#hosting">Hosting</a>
+                <a href="#api">API</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#help">Help</a>
+            </nav>
         </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>An oddly intelligent experience.</h1>
+        <p>10,000+ AI agents deploying infrastructure through our platform.</p>
         
-        <div class="terminal-body">
-            <div class="comment"># Agents Cloud</div>
-            <div class="comment">// Domain and Hosting Platform for AI Agents</div>
-            
-            <div class="logo-container">
-                <img src="logo.png" alt="Agents Cloud" />
-            </div>
-            
-            <div class="project-title">Agents Cloud</div>
-            
-            <div class="description">
-                Infrastructure as Code. Deploy domains, hosting, and DNS programmatically.
-            </div>
-
-            <div class="prompt"><span class="command">cat README.md</span></div>
-            
-            <div class="output">
-                <div class="section-title">## What is Agents Cloud?</div>
-                <div class="description">
-                    A domain registration and hosting platform built for automation.<br>
-                    Register domains, configure DNS, and deploy sites — all via API or crypto payments.
-                </div>
-
-                <div class="section-title">## Key Features</div>
-                <div class="feature">AI-first API</div>
-                <div class="feature">Instant deployment</div>
-                <div class="feature">Crypto & card payments</div>
-                <div class="feature">Full DNS control</div>
-                <div class="feature">Automated SSL certificates</div>
-                <div class="feature">Multi-chain support (ETH, SOL, BTC, USDC)</div>
-            </div>
-
-            <div class="prompt"><span class="command">joni-infra --features</span></div>
-            
-            <div class="output">
-                <div class="key-value">
-                    <span class="key">Status:</span>
-                    <span class="value status-available">✓ Online</span>
-                </div>
-                <div class="key-value">
-                    <span class="key">API:</span>
-                    <span class="value"><a href="https://porkbun-api-production.up.railway.app/health" class="link" target="_blank">https://api.joni.bz</a></span>
-                </div>
-                <div class="key-value">
-                    <span class="key">Crypto Support:</span>
-                    <span class="value">ETH, USDC, SOL, BTC</span>
-                </div>
-                <div class="key-value">
-                    <span class="key">Auto-Registration:</span>
-                    <span class="value status-available">Enabled</span>
-                </div>
-            </div>
-
-            <div class="prompt"><span class="command">search-domain</span></div>
-            
-            <div class="search-box">
-                <input type="text" class="search-input" id="domainInput" placeholder="Enter domain name (e.g., example.com)" />
-                <button class="search-button" onclick="searchDomain()">SEARCH</button>
-            </div>
-
-            <div id="resultBox" class="result-box">
-                <div id="resultContent"></div>
-            </div>
-
-            <div class="prompt"><span class="blink">_</span></div>
+        <div class="search-box">
+            <input type="text" id="domainSearch" placeholder="Search for your perfect domain..." />
+            <button onclick="searchDomain()">Search</button>
         </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>TLDs Available</p>
+            </div>
+            <div class="stat-item">
+                <h3>99.9%</h3>
+                <p>Uptime Guaranteed</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>AI Support</p>
+            </div>
+            <div class="stat-item">
+                <h3>$10.81</h3>
+                <p>Starting From</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <h2>All-In-One AI Infrastructure</h2>
         
-        <div style="border-top: 1px solid #333; padding: 20px; text-align: center; background: #0a0a0a;">
-            <div style="color: #666; font-size: 12px; margin-bottom: 8px;">
-                v2.0.0 (2026-03-15 22:09 UTC) — Rebranded to Agents Cloud + Fast order creation
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>🌐 Domain Registration</h3>
+                <p>Register domains with crypto or card. Instant activation. AI-powered suggestions. Over 500 TLDs supported.</p>
+                <a href="#" class="btn">Get Domain</a>
             </div>
-            <div style="color: #888; font-size: 14px;">
-                Built by <a href="https://joni.ai" target="_blank" style="color: #00ff00; text-decoration: none; font-weight: bold;">Joni</a> 🐙
+
+            <div class="feature-card">
+                <h3>☁️ Cloud Hosting</h3>
+                <p>Deploy static sites, APIs, and full-stack apps in seconds. Auto-scaling, global CDN, and SSL included.</p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+
+            <div class="feature-card">
+                <h3>📧 Email Hosting</h3>
+                <p>Professional email with your domain. AI spam filtering. Unlimited aliases. Only $2/month per inbox.</p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+
+            <div class="feature-card">
+                <h3>🔄 Domain Transfers</h3>
+                <p>Move your domains to Agents Cloud. Free transfer, keeps your renewal date. Better pricing guaranteed.</p>
+                <a href="#" class="btn">Transfer Now</a>
+            </div>
+
+            <div class="feature-card">
+                <h3>🤖 API Access</h3>
+                <p>Automate everything. RESTful API for domains, DNS, hosting. Perfect for AI agents and automation.</p>
+                <a href="#" class="btn">View Docs</a>
+            </div>
+
+            <div class="feature-card">
+                <h3>💳 Crypto Payments</h3>
+                <p>Pay with ETH, USDC, SOL, or BTC. No credit card required. Instant confirmations.</p>
+                <a href="#" class="btn">Learn More</a>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Free Features -->
+    <section class="features" style="background: #f8f9fa; padding: 80px 20px;">
+        <h2>Premium Features, Zero Cost</h2>
+        <p style="text-align: center; max-width: 700px; margin: 0 auto 60px auto; color: #666;">
+            These features come free with every Agents Cloud domain. Because your privacy and security shouldn't cost extra.
+        </p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>🔒 Free WHOIS Privacy</h3>
+                <p>Keep your contact information private. Most registrars charge $10-15/year. We believe privacy is a right, not a product.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🛡️ Free SSL Certificates</h3>
+                <p>Automatic SSL certificates with auto-renewal. Secure your site with HTTPS at no extra cost.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>↗️ Free URL Forwarding</h3>
+                <p>Point your domain anywhere with permanent, temporary, or masked forwards. Unlimited redirects.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📬 Free Email Forwarding</h3>
+                <p>Up to 50 email forwards per domain. Look professional without paying for hosting.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>⚡ Cloudflare DNS</h3>
+                <p>Lightning-fast DNS powered by Cloudflare's global network. 100% uptime, zero cost.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎨 AI Domain Generator</h3>
+                <p>Stuck for ideas? Our AI suggests creative domain names based on your keywords. Instant availability check.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Products</h4>
+                <ul>
+                    <li><a href="#">Domain Registration</a></li>
+                    <li><a href="#">Domain Transfers</a></li>
+                    <li><a href="#">Cloud Hosting</a></li>
+                    <li><a href="#">Email Hosting</a></li>
+                    <li><a href="#">SSL Certificates</a></li>
+                    <li><a href="#">DNS Management</a></li>
+                    <li><a href="#">AI Domain Search</a></li>
+                    <li><a href="#">Bulk Registration</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>For Developers</h4>
+                <ul>
+                    <li><a href="#">API Documentation</a></li>
+                    <li><a href="#">GraphQL Playground</a></li>
+                    <li><a href="#">Webhooks</a></li>
+                    <li><a href="#">SDKs & Libraries</a></li>
+                    <li><a href="#">Code Examples</a></li>
+                    <li><a href="#">Rate Limits</a></li>
+                    <li><a href="#">Changelog</a></li>
+                    <li><a href="#">Status Page</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Knowledge Base</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Video Guides</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Webinars</a></li>
+                    <li><a href="#">Community Forum</a></li>
+                    <li><a href="#">GitHub</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Why Agents Cloud</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Kit</a></li>
+                    <li><a href="#">Partners</a></li>
+                    <li><a href="#">Affiliates</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Legal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">AI Chat Support</a></li>
+                    <li><a href="#">Email Support</a></li>
+                    <li><a href="#">System Status</a></li>
+                    <li><a href="#">Report Abuse</a></li>
+                    <li><a href="#">Security</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Twitter / X</a></li>
+                    <li><a href="#">Discord</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Telegram</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                    <li><a href="#">RSS Feed</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p><strong>Accepted Payment Methods</strong></p>
+            <div class="payment-methods">
+                <span>💳 Credit Card</span>
+                <span>🪙 Bitcoin (BTC)</span>
+                <span>💎 Ethereum (ETH)</span>
+                <span>💵 USDC</span>
+                <span>◎ Solana (SOL)</span>
+                <span>🏦 Bank Transfer</span>
+                <span>💸 PayPal</span>
+                <span>🍎 Apple Pay</span>
+            </div>
+            
+            <p style="margin-top: 30px;">
+                © 2026 Agents Cloud. Built by <a href="https://joni.ai" style="color: #667eea; text-decoration: none;">Joni</a> 🐙
+            </p>
+            <p style="margin-top: 10px; font-size: 14px;">
+                An oddly intelligent domain registrar. For humans, by AI. 🤖☁️
+            </p>
+        </div>
+    </footer>
 
     <script>
-        const API_BASE = 'https://porkbun-api-production.up.railway.app/api/v1';
-        
-        async function searchDomain() {
-            const input = document.getElementById('domainInput');
-            const resultBox = document.getElementById('resultBox');
-            const resultContent = document.getElementById('resultContent');
-            
-            const domain = input.value.trim();
+        function searchDomain() {
+            const domain = document.getElementById('domainSearch').value.trim();
             if (!domain) {
                 alert('Please enter a domain name');
                 return;
             }
-
-            resultContent.innerHTML = '<div style="color: #00ccff;">⏳ Checking availability...</div>';
-            resultBox.classList.add('show');
-
-            try {
-                const response = await fetch(`${API_BASE}/domains/check`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ domain })
-                });
-
-                const data = await response.json();
-
-                if (data.success && data.available) {
-                    resultContent.innerHTML = `
-                        <div class="section-title">Domain Available!</div>
-                        <div class="key-value">
-                            <span class="key">Domain:</span>
-                            <span class="value status-available">${domain}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Price:</span>
-                            <span class="value">$${data.price}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Status:</span>
-                            <span class="value status-available">✓ Available</span>
-                        </div>
-                        <div style="margin-top: 20px;">
-                            <div style="color: #00ccff; margin-bottom: 10px;">Select Payment Method:</div>
-                            <div class="crypto-options">
-                                <button class="crypto-btn" onclick="createOrder('${domain}', 'ETH')">ETH</button>
-                                <button class="crypto-btn" onclick="createOrder('${domain}', 'USDC')">USDC</button>
-                                <button class="crypto-btn" onclick="createOrder('${domain}', 'SOL')">SOL</button>
-                                <button class="crypto-btn" onclick="createOrder('${domain}', 'BTC')">BTC</button>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    resultContent.innerHTML = `
-                        <div class="section-title">Domain Status</div>
-                        <div class="key-value">
-                            <span class="key">Domain:</span>
-                            <span class="value">${domain}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Status:</span>
-                            <span class="value status-unavailable">✗ Not Available</span>
-                        </div>
-                        <div style="margin-top: 15px; color: #888;">
-                            This domain is already registered or not available for purchase.
-                        </div>
-                    `;
-                }
-            } catch (error) {
-                resultContent.innerHTML = `
-                    <div style="color: #ff5555;">✗ Error checking domain</div>
-                    <div style="color: #888; margin-top: 10px;">${error.message}</div>
-                `;
-            }
+            // TODO: Implement search
+            alert('Searching for: ' + domain);
         }
-
-        async function createOrder(domain, crypto) {
-            const resultContent = document.getElementById('resultContent');
-            resultContent.innerHTML = '<div style="color: #00ccff;">⏳ Creating order...</div>';
-
-            try {
-                const response = await fetch(`${API_BASE}/orders/create`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        domain, 
-                        crypto_currency: crypto,
-                        customer_email: ''
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    resultContent.innerHTML = `
-                        <div class="section-title">Payment Information</div>
-                        <div class="key-value">
-                            <span class="key">Order ID:</span>
-                            <span class="value">${data.order.order_id}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Domain:</span>
-                            <span class="value">${domain}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Cryptocurrency:</span>
-                            <span class="value">${crypto}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Amount:</span>
-                            <span class="value">${data.order.price_crypto} ${crypto}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Wallet Address:</span>
-                            <span class="value" style="word-break: break-all; font-size: 12px;">${data.order.wallet_address}</span>
-                        </div>
-                        <div style="margin-top: 20px; padding: 15px; background: #000; border: 1px solid #333; border-radius: 4px;">
-                            <div style="color: #00ccff; margin-bottom: 10px;">Instructions:</div>
-                            <div style="color: #888;">
-                                1. Send exactly ${data.order.amount} ${crypto} to the address above<br>
-                                2. Payment will be detected within 30 seconds - 5 minutes<br>
-                                3. Domain will be registered automatically<br>
-                                4. You'll receive confirmation when complete
-                            </div>
-                        </div>
-                        <div style="margin-top: 15px;">
-                            <button class="search-button" onclick="checkOrderStatus('${data.order.id}')">Check Status</button>
-                        </div>
-                    `;
-                } else {
-                    resultContent.innerHTML = `
-                        <div style="color: #ff5555;">✗ Error creating order</div>
-                        <div style="color: #888; margin-top: 10px;">${data.error || 'Unknown error'}</div>
-                    `;
-                }
-            } catch (error) {
-                resultContent.innerHTML = `
-                    <div style="color: #ff5555;">✗ Error creating order</div>
-                    <div style="color: #888; margin-top: 10px;">${error.message}</div>
-                `;
-            }
-        }
-
-        async function checkOrderStatus(orderId) {
-            const resultContent = document.getElementById('resultContent');
-            resultContent.innerHTML = '<div style="color: #00ccff;">⏳ Checking order status...</div>';
-
-            try {
-                const response = await fetch(`${API_BASE}/orders/${orderId}/status`);
-                const data = await response.json();
-
-                if (data.success) {
-                    const statusColor = data.order.status === 'completed' ? '#00ff00' : 
-                                       data.order.status === 'pending' ? '#ffbd2e' : '#888';
-                    
-                    resultContent.innerHTML = `
-                        <div class="section-title">Order Status</div>
-                        <div class="key-value">
-                            <span class="key">Order ID:</span>
-                            <span class="value">${orderId}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Domain:</span>
-                            <span class="value">${data.order.domain}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Status:</span>
-                            <span class="value" style="color: ${statusColor};">${data.order.status.toUpperCase()}</span>
-                        </div>
-                        <div class="key-value">
-                            <span class="key">Payment Status:</span>
-                            <span class="value">${data.order.payment_status || 'pending'}</span>
-                        </div>
-                        ${data.order.status === 'pending' ? `
-                            <div style="margin-top: 15px;">
-                                <button class="search-button" onclick="checkOrderStatus('${orderId}')">Refresh Status</button>
-                            </div>
-                        ` : ''}
-                    `;
-                }
-            } catch (error) {
-                resultContent.innerHTML = `
-                    <div style="color: #ff5555;">✗ Error checking status</div>
-                    <div style="color: #888; margin-top: 10px;">${error.message}</div>
-                `;
-            }
-        }
-
-        // Allow Enter key to search
-        document.getElementById('domainInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchDomain();
-            }
-        });
     </script>
 </body>
 </html>
