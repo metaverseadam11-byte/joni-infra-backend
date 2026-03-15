@@ -1,7 +1,8 @@
 [build]
-builder = "NIXPACKS"
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "node api/server.porkbun.cjs"
-restartPolicyType = "ON_FAILURE"
+startCommand = "node server.porkbun.cjs"
+restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
