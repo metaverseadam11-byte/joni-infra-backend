@@ -25,6 +25,9 @@
             color: white;
             padding: 20px 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .header-content {
@@ -92,15 +95,27 @@
             margin: 0 auto;
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .search-box input {
             flex: 1;
+            min-width: 300px;
             padding: 18px 25px;
             font-size: 18px;
             border: none;
             border-radius: 50px;
             outline: none;
+        }
+
+        .search-box select {
+            padding: 18px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            outline: none;
+            background: white;
+            cursor: pointer;
         }
 
         .search-box button {
@@ -117,6 +132,97 @@
 
         .search-box button:hover {
             transform: scale(1.05);
+        }
+
+        .search-box button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Result Box */
+        .result-box {
+            max-width: 700px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .payment-details {
+            margin-top: 20px;
+        }
+
+        .payment-info {
+            margin: 15px 0;
+        }
+
+        .payment-info strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #667eea;
+        }
+
+        .wallet-address {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border: 2px solid #e0e0e0;
+            margin-top: 8px;
+        }
+
+        .copy-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #218838;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin: 20px 0;
         }
 
         /* Stats */
@@ -270,6 +376,10 @@
                 flex-direction: column;
             }
 
+            .search-box input {
+                min-width: 100%;
+            }
+
             nav {
                 display: none;
             }
@@ -286,22 +396,32 @@
             </div>
             <nav>
                 <a href="#domains">Domains</a>
-                <a href="#hosting">Hosting</a>
-                <a href="#api">API</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#help">Help</a>
+                <a href="about.html">About</a>
+                <a href="api.html">API</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="help.html">Help</a>
             </nav>
         </div>
     </header>
 
     <!-- Hero -->
-    <section class="hero">
+    <section class="hero" id="domains">
         <h1>An oddly intelligent experience.</h1>
         <p>10,000+ AI agents deploying infrastructure through our platform.</p>
         
         <div class="search-box">
-            <input type="text" id="domainSearch" placeholder="Search for your perfect domain..." />
-            <button onclick="searchDomain()">Search</button>
+            <input type="text" id="domainInput" placeholder="Search for your perfect domain..." />
+            <select id="cryptoSelect">
+                <option value="usdc">Pay with USDC</option>
+                <option value="ethereum">Pay with ETH</option>
+                <option value="solana">Pay with SOL</option>
+                <option value="bitcoin">Pay with BTC</option>
+            </select>
+            <button id="searchBtn" onclick="searchDomain()">Search & Buy</button>
+        </div>
+
+        <div id="resultBox" class="result-box">
+            <div id="resultContent"></div>
         </div>
     </section>
 
@@ -335,37 +455,37 @@
             <div class="feature-card">
                 <h3>🌐 Domain Registration</h3>
                 <p>Register domains with crypto or card. Instant activation. AI-powered suggestions. Over 500 TLDs supported.</p>
-                <a href="#" class="btn">Get Domain</a>
+                <a href="#domains" class="btn">Get Domain</a>
             </div>
 
             <div class="feature-card">
                 <h3>☁️ Cloud Hosting</h3>
                 <p>Deploy static sites, APIs, and full-stack apps in seconds. Auto-scaling, global CDN, and SSL included.</p>
-                <a href="#" class="btn">Learn More</a>
+                <a href="hosting.html" class="btn">Learn More</a>
             </div>
 
             <div class="feature-card">
                 <h3>📧 Email Hosting</h3>
                 <p>Professional email with your domain. AI spam filtering. Unlimited aliases. Only $2/month per inbox.</p>
-                <a href="#" class="btn">Learn More</a>
+                <a href="email.html" class="btn">Learn More</a>
             </div>
 
             <div class="feature-card">
                 <h3>🔄 Domain Transfers</h3>
                 <p>Move your domains to Agents Cloud. Free transfer, keeps your renewal date. Better pricing guaranteed.</p>
-                <a href="#" class="btn">Transfer Now</a>
+                <a href="transfer.html" class="btn">Transfer Now</a>
             </div>
 
             <div class="feature-card">
                 <h3>🤖 API Access</h3>
                 <p>Automate everything. RESTful API for domains, DNS, hosting. Perfect for AI agents and automation.</p>
-                <a href="#" class="btn">View Docs</a>
+                <a href="api.html" class="btn">View Docs</a>
             </div>
 
             <div class="feature-card">
                 <h3>💳 Crypto Payments</h3>
                 <p>Pay with ETH, USDC, SOL, or BTC. No credit card required. Instant confirmations.</p>
-                <a href="#" class="btn">Learn More</a>
+                <a href="crypto.html" class="btn">Learn More</a>
             </div>
         </div>
     </section>
@@ -416,84 +536,84 @@
             <div class="footer-section">
                 <h4>Products</h4>
                 <ul>
-                    <li><a href="#">Domain Registration</a></li>
-                    <li><a href="#">Domain Transfers</a></li>
-                    <li><a href="#">Cloud Hosting</a></li>
-                    <li><a href="#">Email Hosting</a></li>
-                    <li><a href="#">SSL Certificates</a></li>
-                    <li><a href="#">DNS Management</a></li>
-                    <li><a href="#">AI Domain Search</a></li>
-                    <li><a href="#">Bulk Registration</a></li>
+                    <li><a href="#domains">Domain Registration</a></li>
+                    <li><a href="transfer.html">Domain Transfers</a></li>
+                    <li><a href="hosting.html">Cloud Hosting</a></li>
+                    <li><a href="email.html">Email Hosting</a></li>
+                    <li><a href="ssl.html">SSL Certificates</a></li>
+                    <li><a href="dns.html">DNS Management</a></li>
+                    <li><a href="ai-search.html">AI Domain Search</a></li>
+                    <li><a href="bulk.html">Bulk Registration</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h4>For Developers</h4>
                 <ul>
-                    <li><a href="#">API Documentation</a></li>
-                    <li><a href="#">GraphQL Playground</a></li>
-                    <li><a href="#">Webhooks</a></li>
-                    <li><a href="#">SDKs & Libraries</a></li>
-                    <li><a href="#">Code Examples</a></li>
-                    <li><a href="#">Rate Limits</a></li>
-                    <li><a href="#">Changelog</a></li>
-                    <li><a href="#">Status Page</a></li>
+                    <li><a href="api.html">API Documentation</a></li>
+                    <li><a href="graphql.html">GraphQL Playground</a></li>
+                    <li><a href="webhooks.html">Webhooks</a></li>
+                    <li><a href="sdks.html">SDKs & Libraries</a></li>
+                    <li><a href="examples.html">Code Examples</a></li>
+                    <li><a href="rate-limits.html">Rate Limits</a></li>
+                    <li><a href="changelog.html">Changelog</a></li>
+                    <li><a href="status.html">Status Page</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h4>Resources</h4>
                 <ul>
-                    <li><a href="#">Knowledge Base</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Tutorials</a></li>
-                    <li><a href="#">Video Guides</a></li>
-                    <li><a href="#">Case Studies</a></li>
-                    <li><a href="#">Webinars</a></li>
-                    <li><a href="#">Community Forum</a></li>
-                    <li><a href="#">GitHub</a></li>
+                    <li><a href="kb.html">Knowledge Base</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="tutorials.html">Tutorials</a></li>
+                    <li><a href="videos.html">Video Guides</a></li>
+                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="webinars.html">Webinars</a></li>
+                    <li><a href="forum.html">Community Forum</a></li>
+                    <li><a href="https://github.com/agents-cloud">GitHub</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h4>Company</h4>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Why Agents Cloud</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Press Kit</a></li>
-                    <li><a href="#">Partners</a></li>
-                    <li><a href="#">Affiliates</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Legal</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="why.html">Why Agents Cloud</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="press.html">Press Kit</a></li>
+                    <li><a href="partners.html">Partners</a></li>
+                    <li><a href="affiliates.html">Affiliates</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="legal.html">Legal</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h4>Support</h4>
                 <ul>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">AI Chat Support</a></li>
-                    <li><a href="#">Email Support</a></li>
-                    <li><a href="#">System Status</a></li>
-                    <li><a href="#">Report Abuse</a></li>
-                    <li><a href="#">Security</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="chat.html">AI Chat Support</a></li>
+                    <li><a href="email-support.html">Email Support</a></li>
+                    <li><a href="status.html">System Status</a></li>
+                    <li><a href="abuse.html">Report Abuse</a></li>
+                    <li><a href="security.html">Security</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h4>Connect</h4>
                 <ul>
-                    <li><a href="#">Twitter / X</a></li>
-                    <li><a href="#">Discord</a></li>
-                    <li><a href="#">LinkedIn</a></li>
-                    <li><a href="#">YouTube</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Telegram</a></li>
-                    <li><a href="#">Newsletter</a></li>
-                    <li><a href="#">RSS Feed</a></li>
+                    <li><a href="https://twitter.com/agentscloud">Twitter / X</a></li>
+                    <li><a href="https://discord.gg/agentscloud">Discord</a></li>
+                    <li><a href="https://linkedin.com/company/agentscloud">LinkedIn</a></li>
+                    <li><a href="https://youtube.com/@agentscloud">YouTube</a></li>
+                    <li><a href="https://instagram.com/agentscloud">Instagram</a></li>
+                    <li><a href="https://t.me/agentscloud">Telegram</a></li>
+                    <li><a href="newsletter.html">Newsletter</a></li>
+                    <li><a href="rss.xml">RSS Feed</a></li>
                 </ul>
             </div>
         </div>
@@ -520,16 +640,178 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script>
-        function searchDomain() {
-            const domain = document.getElementById('domainSearch').value.trim();
+        const API_BASE = 'https://porkbun-api-production.up.railway.app/api/v1';
+        let currentOrderId = null;
+
+        async function searchDomain() {
+            const domain = document.getElementById('domainInput').value.trim();
+            const crypto = document.getElementById('cryptoSelect').value;
+            
             if (!domain) {
                 alert('Please enter a domain name');
                 return;
             }
-            // TODO: Implement search
-            alert('Searching for: ' + domain);
+
+            const btn = document.getElementById('searchBtn');
+            const resultBox = document.getElementById('resultBox');
+            const resultContent = document.getElementById('resultContent');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span>🔄 Checking...</span>';
+            
+            resultContent.innerHTML = '<div class="status info">⏳ Checking availability...</div>';
+            resultBox.classList.add('show');
+
+            try {
+                // Check availability
+                const checkRes = await fetch(`${API_BASE}/domains/check`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ domain })
+                });
+
+                const checkData = await checkRes.json();
+
+                if (!checkData.success) {
+                    throw new Error(checkData.error);
+                }
+
+                if (!checkData.available) {
+                    resultContent.innerHTML = `
+                        <div class="status error">❌ Domain is not available</div>
+                        <p style="margin-top: 15px; color: #666;">This domain is already registered or not available for purchase.</p>
+                    `;
+                    btn.disabled = false;
+                    btn.innerHTML = 'Search & Buy';
+                    return;
+                }
+
+                // Create order
+                const orderRes = await fetch(`${API_BASE}/orders/create-fast`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        domain,
+                        crypto_currency: crypto,
+                        customer_email: ''
+                    })
+                });
+
+                const orderData = await orderRes.json();
+
+                if (!orderData.success) {
+                    throw new Error(orderData.error);
+                }
+
+                // Show payment screen
+                showPaymentScreen(orderData.order);
+                btn.disabled = false;
+                btn.innerHTML = 'Search & Buy';
+
+            } catch (err) {
+                resultContent.innerHTML = `
+                    <div class="status error">✗ Error: ${err.message}</div>
+                `;
+                btn.disabled = false;
+                btn.innerHTML = 'Search & Buy';
+            }
         }
+
+        function showPaymentScreen(order) {
+            currentOrderId = order.order_id;
+            const resultContent = document.getElementById('resultContent');
+
+            resultContent.innerHTML = `
+                <div class="status success">✅ Domain Available!</div>
+                
+                <div class="payment-details">
+                    <div class="payment-info">
+                        <strong>Domain:</strong>
+                        <span>${order.domain}</span>
+                    </div>
+
+                    <div class="payment-info">
+                        <strong>Price (USD):</strong>
+                        <span>$${order.price_usd.toFixed(2)}</span>
+                    </div>
+
+                    <div class="payment-info">
+                        <strong>Price (Crypto):</strong>
+                        <span>${order.price_crypto} ${order.crypto_currency.toUpperCase()}</span>
+                    </div>
+
+                    <div class="payment-info">
+                        <strong>Send exactly this amount to:</strong>
+                        <div class="wallet-address">${order.wallet_address}</div>
+                        <button class="copy-btn" onclick="copyAddress('${order.wallet_address}')">📋 Copy Address</button>
+                    </div>
+
+                    <div class="qr-code" id="qrCode"></div>
+
+                    <div class="status info">
+                        ⏳ Waiting for payment... This page will auto-update when payment is detected.
+                    </div>
+                </div>
+            `;
+
+            // Generate QR code
+            const qrContainer = document.getElementById('qrCode');
+            if (window.QRCode) {
+                QRCode.toCanvas(order.wallet_address, { width: 256 }, (err, canvas) => {
+                    if (!err && canvas) {
+                        qrContainer.appendChild(canvas);
+                    }
+                });
+            }
+
+            // Start checking for payment
+            checkPaymentStatus(order.order_id);
+        }
+
+        async function checkPaymentStatus(orderId) {
+            setTimeout(async () => {
+                try {
+                    const res = await fetch(`${API_BASE}/orders/${orderId}/status`);
+                    const data = await res.json();
+
+                    if (data.success && (data.status === 'completed' || data.status === 'registered')) {
+                        const resultContent = document.getElementById('resultContent');
+                        resultContent.innerHTML = `
+                            <div class="status success">🎉 Payment Received!</div>
+                            <div class="payment-info">
+                                <strong>Domain:</strong>
+                                <span>${data.domain}</span>
+                            </div>
+                            <div class="payment-info">
+                                <strong>Status:</strong>
+                                <span style="color: #28a745;">✓ Registered</span>
+                            </div>
+                            <p style="margin-top: 20px; color: #666;">Your domain has been successfully registered! DNS will propagate within 24-48 hours.</p>
+                        `;
+                    } else {
+                        // Keep checking
+                        checkPaymentStatus(orderId);
+                    }
+                } catch (err) {
+                    console.error('Error checking status:', err);
+                    checkPaymentStatus(orderId);
+                }
+            }, 10000); // Check every 10 seconds
+        }
+
+        function copyAddress(address) {
+            navigator.clipboard.writeText(address);
+            alert('✓ Address copied to clipboard!');
+        }
+
+        // Allow Enter key to search
+        document.getElementById('domainInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchDomain();
+            }
+        });
     </script>
 </body>
 </html>
