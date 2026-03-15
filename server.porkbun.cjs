@@ -462,7 +462,7 @@ module.exports = app;
 
 /**
  * POST /api/v1/orders/create-fast
- * Fast order creation (no external API calls)
+ * Fast order creation with real-time crypto prices (fallback to hardcoded on error)
  */
 app.post('/api/v1/orders/create-fast', async (req, res) => {
   try {
@@ -484,9 +484,26 @@ app.post('/api/v1/orders/create-fast', async (req, res) => {
       'bitcoin': 'bc1q5ah6yk9q79w9q6506qcj8gmz2yyym4ww9lx8kg'
     };
     
-    const prices = { 'ETH': 2800, 'ethereum': 2800, 'USDC': 1, 'usdc': 1, 'SOL': 140, 'solana': 140, 'BTC': 65000, 'bitcoin': 65000 };
-    const priceUsd = 11.08;
-    const cryptoPrice = prices[crypto_currency] || prices[crypto_currency.toUpperCase()] || 1;
+    // Hardcoded fallback prices (updated 2026-03-15)
+    const fallbackPrices = { 
+      'ETH': 2800, 'ethereum': 2800, 
+      'USDC': 1.0, 'usdc': 1.0, 
+      'SOL': 140, 'solana': 140, 
+      'BTC': 65000, 'bitcoin': 65000 
+    };
+    
+    const priceUsd = 11.08; // Domain price
+    let cryptoPrice;
+    
+    // Try to get real-time price, fallback to hardcoded
+    try {
+      cryptoPrice = await pricingService.getPrice(crypto_currency);
+      console.log(`Using real-time price for ${crypto_currency}: $${cryptoPrice}`);
+    } catch (err) {
+      cryptoPrice = fallbackPrices[crypto_currency] || fallbackPrices[crypto_currency.toUpperCase()] || 1;
+      console.log(`Using fallback price for ${crypto_currency}: $${cryptoPrice}`);
+    }
+    
     const priceCrypto = (priceUsd / cryptoPrice).toFixed(6);
     
     res.json({
@@ -500,7 +517,8 @@ app.post('/api/v1/orders/create-fast', async (req, res) => {
         wallet_address: wallets[crypto_currency] || wallets[crypto_currency.toUpperCase()],
         expires_at: Math.floor(Date.now() / 1000) + 1800,
         expires_in_minutes: 30,
-        status: 'pending'
+        status: 'pending',
+        crypto_price_usd: cryptoPrice // Include current crypto price for reference
       }
     });
   } catch (err) {
