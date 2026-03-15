@@ -45,13 +45,14 @@ if (process.env.API_PORT || process.env.PORKBUN_API_KEY) {
     }
   };
 
-  // Load wallet addresses from file
-  const walletPath = process.env.WALLET_PATH || '/home/node/.joni/wallet/wallet-public.json';
+  // Load wallet addresses from file or environment
+  const walletPath = process.env.WALLET_PATH || path.join(__dirname, 'wallet-public.json');
   try {
     walletAddresses = JSON.parse(fs.readFileSync(walletPath, 'utf-8'));
-    console.log('✅ Wallet addresses loaded');
+    console.log('✅ Wallet addresses loaded from:', walletPath);
   } catch (err) {
     console.error('❌ Failed to load wallet addresses:', err.message);
+    console.error('   Tried path:', walletPath);
     process.exit(1);
   }
 } else {

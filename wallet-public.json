@@ -1,0 +1,11 @@
+{
+  "evmWallet": {
+    "walletAddress": "0xeD0667FFcB1A1D419b22Fbb4F51bbEA5869d67aE"
+  },
+  "solanaWallet": {
+    "walletAddress": "Bpcjryjaqdoj2HGwJkQmZCbUFgqfo6oH53FyaWKdqnqQ"
+  },
+  "bitcoinWallet": {
+    "walletAddress": "bc1q5ah6yk9q79w9q6506qcj8gmz2yyym4ww9lx8kg"
+  }
+}
