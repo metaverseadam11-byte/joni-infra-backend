@@ -459,3 +459,51 @@ process.on('SIGTERM', () => {
 startServer();
 
 module.exports = app;
+
+/**
+ * POST /api/v1/orders/create-fast
+ * Fast order creation (no external API calls)
+ */
+app.post('/api/v1/orders/create-fast', async (req, res) => {
+  try {
+    const { domain, crypto_currency, customer_email } = req.body;
+    
+    if (!domain) {
+      return res.status(400).json({ success: false, error: 'Domain required' });
+    }
+    
+    const orderUuid = require('crypto').randomBytes(16).toString('hex');
+    const wallets = {
+      'ETH': '0xeD0667FFcB1A1D419b22Fbb4F51bbEA5869d67aE',
+      'ethereum': '0xeD0667FFcB1A1D419b22Fbb4F51bbEA5869d67aE',
+      'USDC': '0xeD0667FFcB1A1D419b22Fbb4F51bbEA5869d67aE',
+      'usdc': '0xeD0667FFcB1A1D419b22Fbb4F51bbEA5869d67aE',
+      'SOL': 'Bpcjryjaqdoj2HGwJkQmZCbUFgqfo6oH53FyaWKdqnqQ',
+      'solana': 'Bpcjryjaqdoj2HGwJkQmZCbUFgqfo6oH53FyaWKdqnqQ',
+      'BTC': 'bc1q5ah6yk9q79w9q6506qcj8gmz2yyym4ww9lx8kg',
+      'bitcoin': 'bc1q5ah6yk9q79w9q6506qcj8gmz2yyym4ww9lx8kg'
+    };
+    
+    const prices = { 'ETH': 2800, 'ethereum': 2800, 'USDC': 1, 'usdc': 1, 'SOL': 140, 'solana': 140, 'BTC': 65000, 'bitcoin': 65000 };
+    const priceUsd = 11.08;
+    const cryptoPrice = prices[crypto_currency] || prices[crypto_currency.toUpperCase()] || 1;
+    const priceCrypto = (priceUsd / cryptoPrice).toFixed(6);
+    
+    res.json({
+      success: true,
+      order: {
+        order_id: orderUuid,
+        domain: domain,
+        price_usd: priceUsd,
+        price_crypto: parseFloat(priceCrypto),
+        crypto_currency: crypto_currency.toUpperCase(),
+        wallet_address: wallets[crypto_currency] || wallets[crypto_currency.toUpperCase()],
+        expires_at: Math.floor(Date.now() / 1000) + 1800,
+        expires_in_minutes: 30,
+        status: 'pending'
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
