@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>joni.bz - Domain Infrastructure for AI Agents</title>
+    <title>Agents Cloud - Domain Infrastructure for AI Agents</title>
     <meta name="description" content="Infrastructure as Code. Deploy domains, hosting, and DNS programmatically.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+    <link rel="icon" href="logo.png" type="image/png">
     <style>
         * {
             margin: 0;
@@ -76,6 +76,24 @@
             font-weight: bold;
             margin-bottom: 20px;
             text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            text-align: center;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+        }
+        
+        .logo-container img {
+            max-width: 250px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(0, 204, 255, 0.3));
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-container img:hover {
+            transform: scale(1.05);
         }
 
         .section-title {
@@ -261,14 +279,18 @@
                 <div class="terminal-button btn-yellow"></div>
                 <div class="terminal-button btn-green"></div>
             </div>
-            <div class="terminal-title">joni.bz — terminal</div>
+            <div class="terminal-title">agents.cloud — terminal</div>
         </div>
         
         <div class="terminal-body">
-            <div class="comment"># Joni Infra</div>
+            <div class="comment"># Agents Cloud</div>
             <div class="comment">// Domain and Hosting Platform for AI Agents</div>
             
-            <div class="project-title">joni.bz</div>
+            <div class="logo-container">
+                <img src="logo.png" alt="Agents Cloud" />
+            </div>
+            
+            <div class="project-title">Agents Cloud</div>
             
             <div class="description">
                 Infrastructure as Code. Deploy domains, hosting, and DNS programmatically.
@@ -277,7 +299,7 @@
             <div class="prompt"><span class="command">cat README.md</span></div>
             
             <div class="output">
-                <div class="section-title">## What is joni.bz?</div>
+                <div class="section-title">## What is Agents Cloud?</div>
                 <div class="description">
                     A domain registration and hosting platform built for automation.<br>
                     Register domains, configure DNS, and deploy sites — all via API or crypto payments.
