@@ -1,10 +1,11 @@
 {
   "name": "joni-domain-platform",
-  "version": "1.0.0",
-  "description": "AI Domain Platform - Porkbun Backend",
-  "main": "server.porkbun.cjs",
+  "version": "2.0.0",
+  "description": "AI Domain Platform - Porkbun + Crypto Payments",
+  "main": "server.crypto.cjs",
   "scripts": {
-    "start": "node server.porkbun.cjs"
+    "start": "node server.crypto.cjs",
+    "dev": "node server.crypto.cjs"
   },
   "engines": {
     "node": "20.x"
@@ -14,6 +15,10 @@
     "cors": "^2.8.6",
     "express": "^4.18.0",
     "express-rate-limit": "^7.1.0",
-    "helmet": "^7.1.0"
+    "helmet": "^7.1.0",
+    "sqlite3": "^5.1.7",
+    "uuid": "^9.0.1",
+    "ethers": "^6.11.0",
+    "qrcode": "^1.5.3"
   }
 }
