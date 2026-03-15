@@ -257,7 +257,7 @@ async function checkDomain() {
         }
 
         // Create order
-        const orderRes = await fetch(`${API_BASE}/orders/create-fast`, {
+        const orderRes = await fetch(`${API_BASE}/orders/create`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
