@@ -3,304 +3,524 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>joni.bz - Buy Domains with Crypto | ETH, BTC, SOL, USDC</title>
-    <meta name="description" content="Register domains instantly using cryptocurrency. Accept ETH, Bitcoin, Solana, and USDC. Fast, secure, and automated domain registration.">
-    <meta name="keywords" content="crypto domains, buy domains with crypto, ethereum domains, bitcoin domains, domain registration, blockchain">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://joni.bz">
-    <meta property="og:title" content="joni.bz - Buy Domains with Crypto">
-    <meta property="og:description" content="Register domains instantly using cryptocurrency. Accept ETH, Bitcoin, Solana, and USDC.">
-    <meta property="og:image" content="https://joni.bz/favicon.svg">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://joni.bz">
-    <meta name="twitter:title" content="joni.bz - Buy Domains with Crypto">
-    <meta name="twitter:description" content="Register domains instantly using cryptocurrency. Accept ETH, Bitcoin, Solana, and USDC.">
-    
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>joni.bz - Domain Infrastructure for AI Agents</title>
+    <meta name="description" content="Infrastructure as Code. Deploy domains, hosting, and DNS programmatically.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', 'Consolas', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .terminal {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #000;
+            border: 2px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.1);
+        }
+
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 12px 20px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .btn-red { background: #ff5f56; }
+        .btn-yellow { background: #ffbd2e; }
+        .btn-green { background: #27c93f; }
+
+        .terminal-title {
+            color: #888;
+            font-size: 13px;
+        }
+
+        .terminal-body {
+            padding: 30px;
+            min-height: 500px;
+        }
+
+        .comment {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .project-title {
+            color: #00ff00;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .section-title {
+            color: #00ccff;
+            font-size: 18px;
+            margin: 30px 0 15px 0;
+        }
+
+        .description {
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .prompt {
+            color: #00ff00;
+            margin-top: 20px;
+        }
+
+        .prompt::before {
+            content: 'user@joni:~$ ';
+            color: #00ccff;
+        }
+
+        .command {
+            color: #fff;
+        }
+
+        .output {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .feature {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .feature::before {
+            content: '✓ ';
+            color: #00ff00;
+        }
+
+        .key-value {
+            display: flex;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .key {
+            color: #ff00ff;
+            min-width: 150px;
+        }
+
+        .value {
+            color: #fff;
+        }
+
+        .link {
+            color: #00ccff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .search-box {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #00ff00;
+            padding: 10px 15px;
+            font-family: inherit;
+            font-size: 14px;
+            flex: 1;
+            border-radius: 4px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+        }
+
+        .search-button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .search-button:hover {
+            background: #00ccff;
+            transform: scale(1.05);
+        }
+
+        .result-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .status-available {
+            color: #00ff00;
+        }
+
+        .status-unavailable {
+            color: #ff5555;
+        }
+
+        .crypto-options {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .crypto-btn {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #00ff00;
+            padding: 8px 16px;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .crypto-btn:hover,
+        .crypto-btn.selected {
+            border-color: #00ff00;
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .terminal-body {
+                padding: 15px;
+            }
+            
+            .project-title {
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container nav-container">
-            <div class="logo">
-                <span class="logo-icon">🌐</span>
-                <span class="logo-text">joni.bz</span>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="terminal-button btn-red"></div>
+                <div class="terminal-button btn-yellow"></div>
+                <div class="terminal-button btn-green"></div>
             </div>
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#search" class="nav-link">Search Domains</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#admin" class="nav-link">Admin</a></li>
-            </ul>
+            <div class="terminal-title">joni.bz — terminal</div>
         </div>
-    </nav>
+        
+        <div class="terminal-body">
+            <div class="comment"># Joni Infra</div>
+            <div class="comment">// Domain and Hosting Platform for AI Agents</div>
+            
+            <div class="project-title">joni.bz</div>
+            
+            <div class="description">
+                Infrastructure as Code. Deploy domains, hosting, and DNS programmatically.
+            </div>
 
-    <!-- Main Content -->
-    <main id="app">
-        <!-- Home Page -->
-        <section id="home" class="page active">
-            <!-- Hero Section -->
-            <div class="hero">
-                <div class="container">
-                    <div class="hero-content">
-                        <h1 class="hero-title">
-                            Buy Domains with <span class="gradient-text">Crypto</span>
-                        </h1>
-                        <p class="hero-subtitle">
-                            Register your perfect domain instantly using cryptocurrency. 
-                            Fast, secure, and completely automated.
-                        </p>
-                        <div class="crypto-badges">
-                            <span class="badge">ETH</span>
-                            <span class="badge">USDC</span>
-                            <span class="badge">SOL</span>
-                            <span class="badge">BTC</span>
+            <div class="prompt"><span class="command">cat README.md</span></div>
+            
+            <div class="output">
+                <div class="section-title">## What is joni.bz?</div>
+                <div class="description">
+                    A domain registration and hosting platform built for automation.<br>
+                    Register domains, configure DNS, and deploy sites — all via API or crypto payments.
+                </div>
+
+                <div class="section-title">## Key Features</div>
+                <div class="feature">AI-first API</div>
+                <div class="feature">Instant deployment</div>
+                <div class="feature">Crypto & card payments</div>
+                <div class="feature">Full DNS control</div>
+                <div class="feature">Automated SSL certificates</div>
+                <div class="feature">Multi-chain support (ETH, SOL, BTC, USDC)</div>
+            </div>
+
+            <div class="prompt"><span class="command">joni-infra --features</span></div>
+            
+            <div class="output">
+                <div class="key-value">
+                    <span class="key">Status:</span>
+                    <span class="value status-available">✓ Online</span>
+                </div>
+                <div class="key-value">
+                    <span class="key">API:</span>
+                    <span class="value"><a href="https://porkbun-api-production.up.railway.app/health" class="link" target="_blank">https://api.joni.bz</a></span>
+                </div>
+                <div class="key-value">
+                    <span class="key">Crypto Support:</span>
+                    <span class="value">ETH, USDC, SOL, BTC</span>
+                </div>
+                <div class="key-value">
+                    <span class="key">Auto-Registration:</span>
+                    <span class="value status-available">Enabled</span>
+                </div>
+            </div>
+
+            <div class="prompt"><span class="command">search-domain</span></div>
+            
+            <div class="search-box">
+                <input type="text" class="search-input" id="domainInput" placeholder="Enter domain name (e.g., example.com)" />
+                <button class="search-button" onclick="searchDomain()">SEARCH</button>
+            </div>
+
+            <div id="resultBox" class="result-box">
+                <div id="resultContent"></div>
+            </div>
+
+            <div class="prompt"><span class="blink">_</span></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://porkbun-api-production.up.railway.app/api/v1';
+        
+        async function searchDomain() {
+            const input = document.getElementById('domainInput');
+            const resultBox = document.getElementById('resultBox');
+            const resultContent = document.getElementById('resultContent');
+            
+            const domain = input.value.trim();
+            if (!domain) {
+                alert('Please enter a domain name');
+                return;
+            }
+
+            resultContent.innerHTML = '<div style="color: #00ccff;">⏳ Checking availability...</div>';
+            resultBox.classList.add('show');
+
+            try {
+                const response = await fetch(`${API_BASE}/domains/check`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ domain })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.available) {
+                    resultContent.innerHTML = `
+                        <div class="section-title">Domain Available!</div>
+                        <div class="key-value">
+                            <span class="key">Domain:</span>
+                            <span class="value status-available">${domain}</span>
                         </div>
-                        <a href="#search" class="btn btn-primary btn-large">
-                            Search Domains →
-                        </a>
-                    </div>
-                    <div class="hero-visual">
-                        <div class="floating-card">
-                            <div class="card-header">
-                                <span class="status-dot"></span>
-                                <span>Payment Confirmed</span>
+                        <div class="key-value">
+                            <span class="key">Price:</span>
+                            <span class="value">$${data.price}</span>
+                        </div>
+                        <div class="key-value">
+                            <span class="key">Status:</span>
+                            <span class="value status-available">✓ Available</span>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <div style="color: #00ccff; margin-bottom: 10px;">Select Payment Method:</div>
+                            <div class="crypto-options">
+                                <button class="crypto-btn" onclick="createOrder('${domain}', 'ETH')">ETH</button>
+                                <button class="crypto-btn" onclick="createOrder('${domain}', 'USDC')">USDC</button>
+                                <button class="crypto-btn" onclick="createOrder('${domain}', 'SOL')">SOL</button>
+                                <button class="crypto-btn" onclick="createOrder('${domain}', 'BTC')">BTC</button>
                             </div>
-                            <div class="card-body">
-                                <div class="domain-display">example.com</div>
-                                <div class="crypto-amount">0.05 ETH</div>
+                        </div>
+                    `;
+                } else {
+                    resultContent.innerHTML = `
+                        <div class="section-title">Domain Status</div>
+                        <div class="key-value">
+                            <span class="key">Domain:</span>
+                            <span class="value">${domain}</span>
+                        </div>
+                        <div class="key-value">
+                            <span class="key">Status:</span>
+                            <span class="value status-unavailable">✗ Not Available</span>
+                        </div>
+                        <div style="margin-top: 15px; color: #888;">
+                            This domain is already registered or not available for purchase.
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultContent.innerHTML = `
+                    <div style="color: #ff5555;">✗ Error checking domain</div>
+                    <div style="color: #888; margin-top: 10px;">${error.message}</div>
+                `;
+            }
+        }
+
+        async function createOrder(domain, crypto) {
+            const resultContent = document.getElementById('resultContent');
+            resultContent.innerHTML = '<div style="color: #00ccff;">⏳ Creating order...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/orders/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        domain, 
+                        cryptocurrency: crypto,
+                        email: ''
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultContent.innerHTML = `
+                        <div class="section-title">Payment Information</div>
+                        <div class="key-value">
+                            <span class="key">Order ID:</span>
+                            <span class="value">${data.order.id}</span>
+                        </div>
+                        <div class="key-value">
+                            <span class="key">Domain:</span>
+                            <span class="value">${domain}</span>
+                        </div>
+                        <div class="key-value">
+                            <span class="key">Cryptocurrency:</span>
+                            <span class="value">${crypto}</span>
+                        </div>
+                        <div class="key-value">
+                            <span class="key">Amount:</span>
+                            <span class="value">${data.order.amount} ${crypto}</span>
+                        </div>
+                        <div class="key-value">
+                            <span class="key">Wallet Address:</span>
+                            <span class="value" style="word-break: break-all; font-size: 12px;">${data.order.wallet_address}</span>
+                        </div>
+                        <div style="margin-top: 20px; padding: 15px; background: #000; border: 1px solid #333; border-radius: 4px;">
+                            <div style="color: #00ccff; margin-bottom: 10px;">Instructions:</div>
+                            <div style="color: #888;">
+                                1. Send exactly ${data.order.amount} ${crypto} to the address above<br>
+                                2. Payment will be detected within 30 seconds - 5 minutes<br>
+                                3. Domain will be registered automatically<br>
+                                4. You'll receive confirmation when complete
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <div style="margin-top: 15px;">
+                            <button class="search-button" onclick="checkOrderStatus('${data.order.id}')">Check Status</button>
+                        </div>
+                    `;
+                } else {
+                    resultContent.innerHTML = `
+                        <div style="color: #ff5555;">✗ Error creating order</div>
+                        <div style="color: #888; margin-top: 10px;">${data.error || 'Unknown error'}</div>
+                    `;
+                }
+            } catch (error) {
+                resultContent.innerHTML = `
+                    <div style="color: #ff5555;">✗ Error creating order</div>
+                    <div style="color: #888; margin-top: 10px;">${error.message}</div>
+                `;
+            }
+        }
 
-            <!-- Features Section -->
-            <div class="features">
-                <div class="container">
-                    <h2 class="section-title">Why Choose joni.bz?</h2>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">⚡</div>
-                            <h3>Instant Registration</h3>
-                            <p>Your domain is registered automatically as soon as payment is confirmed on the blockchain.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🔒</div>
-                            <h3>Secure & Private</h3>
-                            <p>No middlemen. Direct blockchain payments with complete privacy and security.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">💎</div>
-                            <h3>Multi-Chain Support</h3>
-                            <p>Pay with Ethereum, Bitcoin, Solana, or USDC. Choose what works best for you.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🌍</div>
-                            <h3>Global Access</h3>
-                            <p>No geographic restrictions. Register domains from anywhere in the world.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📊</div>
-                            <h3>Real-Time Tracking</h3>
-                            <p>Monitor your payment and registration status in real-time with blockchain confirmations.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">💰</div>
-                            <h3>Competitive Pricing</h3>
-                            <p>Fair market rates with transparent pricing. No hidden fees or surprise charges.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        async function checkOrderStatus(orderId) {
+            const resultContent = document.getElementById('resultContent');
+            resultContent.innerHTML = '<div style="color: #00ccff;">⏳ Checking order status...</div>';
 
-            <!-- How It Works -->
-            <div class="how-it-works">
-                <div class="container">
-                    <h2 class="section-title">How It Works</h2>
-                    <div class="steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <h3>Search Domain</h3>
-                            <p>Enter your desired domain name and check availability instantly.</p>
-                        </div>
-                        <div class="step-arrow">→</div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <h3>Choose Crypto</h3>
-                            <p>Select your preferred cryptocurrency and see the price in real-time.</p>
-                        </div>
-                        <div class="step-arrow">→</div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <h3>Pay & Register</h3>
-                            <p>Send payment to the provided address and your domain registers automatically.</p>
-                        </div>
-                    </div>
-                    <div class="cta-section">
-                        <a href="#search" class="btn btn-secondary btn-large">
-                            Get Started Now
-                        </a>
-                    </div>
-                </div>
-            </div>
+            try {
+                const response = await fetch(`${API_BASE}/orders/${orderId}/status`);
+                const data = await response.json();
 
-            <!-- Supported Cryptocurrencies -->
-            <div class="crypto-section">
-                <div class="container">
-                    <h2 class="section-title">Supported Cryptocurrencies</h2>
-                    <div class="crypto-grid">
-                        <div class="crypto-card">
-                            <div class="crypto-icon">Ξ</div>
-                            <h3>Ethereum</h3>
-                            <p>ETH Network</p>
-                        </div>
-                        <div class="crypto-card">
-                            <div class="crypto-icon">₿</div>
-                            <h3>Bitcoin</h3>
-                            <p>BTC Network</p>
-                        </div>
-                        <div class="crypto-card">
-                            <div class="crypto-icon">◎</div>
-                            <h3>Solana</h3>
-                            <p>SOL Network</p>
-                        </div>
-                        <div class="crypto-card">
-                            <div class="crypto-icon">$</div>
-                            <h3>USDC</h3>
-                            <p>Stablecoin</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Domain Search Page -->
-        <section id="search" class="page">
-            <div class="container">
-                <div id="searchContent">
-                    <!-- Content will be loaded from search.html -->
-                </div>
-            </div>
-        </section>
-
-        <!-- About Page -->
-        <section id="about" class="page">
-            <div class="container">
-                <div class="about-content">
-                    <h1 class="page-title">About joni.bz</h1>
+                if (data.success) {
+                    const statusColor = data.order.status === 'completed' ? '#00ff00' : 
+                                       data.order.status === 'pending' ? '#ffbd2e' : '#888';
                     
-                    <div class="about-section">
-                        <h2>Our Mission</h2>
-                        <p>We believe domain registration should be as modern as the internet itself. By accepting cryptocurrency payments, we're making domain registration faster, more private, and accessible to everyone worldwide.</p>
-                    </div>
-
-                    <div class="about-section">
-                        <h2>How We're Different</h2>
-                        <p>Traditional domain registrars require credit cards, personal information, and lengthy verification processes. We've streamlined everything with blockchain technology:</p>
-                        <ul class="feature-list">
-                            <li>✅ No credit card required</li>
-                            <li>✅ No lengthy sign-up forms</li>
-                            <li>✅ Automated registration process</li>
-                            <li>✅ Real-time blockchain confirmations</li>
-                            <li>✅ Complete privacy protection</li>
-                        </ul>
-                    </div>
-
-                    <div class="about-section">
-                        <h2>Frequently Asked Questions</h2>
-                        
-                        <div class="faq-item">
-                            <h3>How long does registration take?</h3>
-                            <p>Once your payment is confirmed on the blockchain (typically 5-15 minutes), your domain is registered automatically within seconds.</p>
+                    resultContent.innerHTML = `
+                        <div class="section-title">Order Status</div>
+                        <div class="key-value">
+                            <span class="key">Order ID:</span>
+                            <span class="value">${orderId}</span>
                         </div>
-
-                        <div class="faq-item">
-                            <h3>What happens if my payment fails?</h3>
-                            <p>If payment doesn't arrive within 30 minutes, your order expires and no charge is made. You can create a new order anytime.</p>
+                        <div class="key-value">
+                            <span class="key">Domain:</span>
+                            <span class="value">${data.order.domain}</span>
                         </div>
-
-                        <div class="faq-item">
-                            <h3>Do you store my cryptocurrency?</h3>
-                            <p>No. Payments go directly to our secure wallet addresses. We never hold funds in escrow.</p>
+                        <div class="key-value">
+                            <span class="key">Status:</span>
+                            <span class="value" style="color: ${statusColor};">${data.order.status.toUpperCase()}</span>
                         </div>
-
-                        <div class="faq-item">
-                            <h3>Can I transfer my domain later?</h3>
-                            <p>Yes! All domains are standard registrations that can be transferred to any registrar using standard transfer procedures.</p>
+                        <div class="key-value">
+                            <span class="key">Payment Status:</span>
+                            <span class="value">${data.order.payment_status || 'pending'}</span>
                         </div>
+                        ${data.order.status === 'pending' ? `
+                            <div style="margin-top: 15px;">
+                                <button class="search-button" onclick="checkOrderStatus('${orderId}')">Refresh Status</button>
+                            </div>
+                        ` : ''}
+                    `;
+                }
+            } catch (error) {
+                resultContent.innerHTML = `
+                    <div style="color: #ff5555;">✗ Error checking status</div>
+                    <div style="color: #888; margin-top: 10px;">${error.message}</div>
+                `;
+            }
+        }
 
-                        <div class="faq-item">
-                            <h3>What if I need support?</h3>
-                            <p>Contact us at support@joni.bz and we'll respond within 24 hours.</p>
-                        </div>
-                    </div>
-
-                    <div class="about-section">
-                        <h2>Technology Stack</h2>
-                        <p>Built with modern web technologies and powered by:</p>
-                        <ul class="tech-list">
-                            <li>Porkbun Domain API</li>
-                            <li>Multi-chain blockchain integration</li>
-                            <li>Real-time price feeds</li>
-                            <li>Automated order processing</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Admin Page -->
-        <section id="admin" class="page">
-            <div class="container">
-                <div id="adminContent">
-                    <!-- Content will be loaded from admin.html -->
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>joni.bz</h3>
-                    <p>Modern domain registration powered by blockchain technology.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#search">Search Domains</a></li>
-                        <li><a href="#about">About</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="mailto:support@joni.bz">support@joni.bz</a></li>
-                        <li><a href="#about">FAQ</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 joni.bz. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/router.js"></script>
-    <script src="js/app.js"></script>
+        // Allow Enter key to search
+        document.getElementById('domainInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchDomain();
+            }
+        });
+    </script>
 </body>
 </html>
