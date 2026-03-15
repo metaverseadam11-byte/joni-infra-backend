@@ -56,6 +56,41 @@ if (process.env.API_PORT || process.env.PORKBUN_API_KEY) {
     process.exit(1);
   }
 } else {
+  console.log('📦 Loading config from config.json...');
+  try {
+    config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), 'utf-8'));
+  } catch (err) {
+    console.error('❌ Failed to load config.json:', err.message);
+    console.error('   Please create config.json or set environment variables');
+    process.exit(1);
+  }
+  
+  // Load wallet addresses
+  const walletPath = path.join(__dirname, 'wallet-public.json');
+  try {
+    walletAddresses = JSON.parse(fs.readFileSync(walletPath, 'utf-8'));
+    console.log('✅ Wallet addresses loaded from:', walletPath);
+  } catch (err) {
+    console.error('❌ Failed to load wallet addresses:', err.message);
+    process.exit(1);
+  }
+}
+    config = JSON.parse(fs.readFileSync(path.join(__dirname, "config.json"), "utf-8"));
+  } catch (err) {
+    console.error("❌ Failed to load config.json:", err.message);
+    process.exit(1);
+  }
+  
+  // Load wallet addresses
+  const walletPath = path.join(__dirname, "wallet-public.json");
+  try {
+    walletAddresses = JSON.parse(fs.readFileSync(walletPath, "utf-8"));
+    console.log("✅ Wallet addresses loaded from:", walletPath);
+  } catch (err) {
+    console.error("❌ Failed to load wallet addresses:", err.message);
+    process.exit(1);
+  }
+}
   console.error('❌ Missing required environment variables');
   process.exit(1);
 }

@@ -1,0 +1,23 @@
+{
+  "api": {
+    "port": 3000,
+    "host": "0.0.0.0",
+    "apiKey": "joni-api-key-2026"
+  },
+  "porkbun": {
+    "apiKey": "pk1_1f604c8b6738a279a1ac09d502846a41ece839e433c9b8110c6f506ecf84015f",
+    "secretApiKey": "sk1_3b97d3de6698efef955d9742e78b87d4422971966a0deb13dcf1619bfc103ee7"
+  },
+  "crypto": {
+    "enabled": true,
+    "rpcUrls": {
+      "ethereum": "https://eth.llamarpc.com",
+      "polygon": "https://polygon-rpc.com",
+      "bsc": "https://bsc-dataseed.binance.org",
+      "solana": "https://api.mainnet-beta.solana.com"
+    }
+  },
+  "database": {
+    "path": "./data/orders.db"
+  }
+}
