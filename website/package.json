@@ -1,0 +1,22 @@
+{
+  "name": "joni-bz-website",
+  "version": "1.0.0",
+  "description": "Crypto domain sales platform - joni.bz",
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod --dir=.",
+    "preview": "python3 -m http.server 8080"
+  },
+  "keywords": [
+    "domains",
+    "crypto",
+    "blockchain",
+    "ethereum",
+    "bitcoin",
+    "solana"
+  ],
+  "author": "joni.bz",
+  "license": "UNLICENSED",
+  "private": true
+}
