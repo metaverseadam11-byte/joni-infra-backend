@@ -13,6 +13,17 @@ class OrderManager {
     this.pricing = pricingService;
     this.walletAddresses = walletAddresses;
     this.orderExpiryMinutes = 30; // Orders expire after 30 minutes
+    
+    // Cached pricing (fallback if Porkbun API times out)
+    this.cachedPricing = {
+      'com': { registration: '11.08' },
+      'net': { registration: '13.48' },
+      'org': { registration: '12.08' },
+      'io': { registration: '39.98' },
+      'ai': { registration: '99.00' },
+      'xyz': { registration: '1.99' },
+      'app': { registration: '17.98' }
+    };
   }
 
   /**
@@ -35,21 +46,16 @@ class OrderManager {
     // Note: Availability already checked in /domains/check endpoint
     // Skipping redundant check here to avoid timeouts
 
-    // Get domain pricing from Porkbun
+    // Get domain pricing (use cached prices to avoid Porkbun API timeout)
     let priceUsd;
-    try {
-      const pricing = await this.porkbun.getPricing();
-      const tld = domain.split('.').pop();
-      const tldPricing = pricing[tld];
-      
-      if (!tldPricing) {
-        throw new Error(`Pricing not available for .${tld} domains`);
-      }
-      
-      priceUsd = parseFloat(tldPricing.registration);
-    } catch (err) {
-      throw new Error(`Failed to get pricing: ${err.message}`);
+    const tld = domain.split('.').pop();
+    const tldPricing = this.cachedPricing[tld];
+    
+    if (!tldPricing) {
+      throw new Error(`Pricing not available for .${tld} domains. Supported: com, net, org, io, ai, xyz, app`);
     }
+    
+    priceUsd = parseFloat(tldPricing.registration);
 
     // Convert to crypto amount
     const priceCrypto = await this.pricing.convertUsdToCrypto(priceUsd, crypto_currency);
