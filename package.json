@@ -1,24 +1,22 @@
 {
-  "name": "joni-domain-platform",
+  "name": "agents-cloud-website",
   "version": "2.0.0",
-  "description": "AI Domain Platform - Porkbun + Crypto Payments",
-  "main": "server.crypto.cjs",
+  "description": "Crypto domain sales platform - Agents Cloud",
   "scripts": {
-    "start": "node server.crypto.cjs",
-    "dev": "node server.crypto.cjs"
+    "dev": "python3 -m http.server 8080",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod --dir=.",
+    "preview": "python3 -m http.server 8080"
   },
-  "engines": {
-    "node": "20.x"
-  },
-  "dependencies": {
-    "axios": "^1.6.0",
-    "cors": "^2.8.6",
-    "express": "^4.18.0",
-    "express-rate-limit": "^7.1.0",
-    "helmet": "^7.1.0",
-    "sqlite3": "^5.1.7",
-    "uuid": "^9.0.1",
-    "ethers": "^6.11.0",
-    "qrcode": "^1.5.3"
-  }
+  "keywords": [
+    "domains",
+    "crypto",
+    "blockchain",
+    "ethereum",
+    "bitcoin",
+    "solana"
+  ],
+  "author": "Agents Cloud",
+  "license": "UNLICENSED",
+  "private": true
 }
