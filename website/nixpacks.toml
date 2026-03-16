@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["nodejs"]
+nixPkgs = ['nodejs-20_x']
 
 [phases.install]
-cmds = ["echo 'No build step required - static site'"]
+cmds = ['npm install -g serve']
 
 [start]
-cmd = "npx serve -s . -p $PORT"
+cmd = 'serve . -p $PORT'

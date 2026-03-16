@@ -1,0 +1,11 @@
+server.crypto.cjs
+server.porkbun.cjs
+services/
+database/
+public/
+api/
+config/
+scripts/
+.env
+*.db
+node_modules/
